@@ -1,0 +1,81 @@
+{
+  "name": "agent-wind-tunnel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline-first laboratory for evaluating agent topologies, authority boundaries, failure behavior, and architecture ablations.",
+  "author": "Marc-André Turgeon",
+  "license": "MIT",
+  "homepage": "https://ma-turgeon.github.io/agent-wind-tunnel/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ma-turgeon/agent-wind-tunnel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ma-turgeon/agent-wind-tunnel/issues"
+  },
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "agent-wind-tunnel": "./agent-wind-tunnel.mjs"
+  },
+  "keywords": [
+    "agentic-ai",
+    "ai-evaluation",
+    "agent-orchestration",
+    "llmops",
+    "ablation-testing",
+    "ai-governance"
+  ],
+  "files": [
+    ".env.example",
+    "AI_COLLABORATION.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "agent-wind-tunnel.mjs",
+    "index.mjs",
+    "baselines/",
+    "docs/*.md",
+    "docs/assets/",
+    "evidence/",
+    "examples/",
+    "lib/",
+    "price-cards/",
+    "scenarios/",
+    "schemas/",
+    "scripts/",
+    "test/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "demo": "node agent-wind-tunnel.mjs demo",
+    "demo:ci": "node agent-wind-tunnel.mjs demo --output .ci-output/fixture",
+    "inspect": "node agent-wind-tunnel.mjs inspect",
+    "test": "node --test --test-reporter=spec test/*.test.mjs",
+    "test:detailed": "node --test --test-isolation=none --test-reporter=spec test/*.test.mjs",
+    "test:inventory": "node scripts/test-inventory.mjs --expect 82",
+    "test:coverage": "node --test --experimental-test-coverage --test-coverage-exclude=examples/** --test-coverage-lines=90 --test-coverage-branches=80 --test-coverage-functions=95 test/*.test.mjs",
+    "check:tests": "npm run test:inventory && npm run test:coverage",
+    "verify:artifacts": "node scripts/verify-artifacts.mjs",
+    "verify:fixture": "npm run verify:artifacts -- wind-tunnel-output/fixture",
+    "verify:ci": "npm run verify:artifacts -- .ci-output/fixture",
+    "verify:evidence": "node scripts/verify-public-live-evidence.mjs",
+    "check": "npm run check:tests && npm run demo:ci && npm run verify:ci && npm run verify:evidence && npm run baseline:check && npm run release:audit",
+    "baseline:check": "node scripts/check-baseline.mjs .ci-output/fixture/results.json baselines/deterministic-fixture.json true",
+    "pack:check": "node scripts/run-release-audit.mjs --allowlist-only",
+    "release:audit": "node scripts/run-release-audit.mjs",
+    "pages:stage": "node scripts/stage-pages.mjs --site docs/site --report .pages-output/enterprise-calibration --output .site-output",
+    "live": "node agent-wind-tunnel.mjs run --adapter openai"
+  },
+  "dependencies": {
+    "openai": "7.0.0",
+    "zod": "4.4.3"
+  }
+}

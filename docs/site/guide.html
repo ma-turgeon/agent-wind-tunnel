@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Technical guide to Agent Wind Tunnel architecture, methodology, reproducibility, and authority boundaries.">
+  <title>Technical guide · Agent Wind Tunnel</title>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <nav class="site-nav" aria-label="Primary"><div class="shell"><a class="brand" href="index.html">Agent Wind Tunnel</a><div class="nav-links"><a href="demo.html">Demo</a><a href="live-pilot.html">Live pilot</a><a href="report/">Report</a><a href="case-study.html">Case study</a><a href="limitations.html">Limitations</a><a href="fr.html" lang="fr">Français</a></div></div></nav>
+  <main id="main">
+    <header class="page-head shell">
+      <p class="eyebrow">Technical guide</p>
+      <h1>A closed architecture experiment with an exact route ledger.</h1>
+      <p class="lede">The runner owns topology. Adapters implement declared roles. Policy remains outside the graph. Results retain their provenance and evidence mode.</p>
+    </header>
+    <article class="prose">
+      <h2>Ten-minute verification</h2>
+      <pre><code>git clone https://github.com/ma-turgeon/agent-wind-tunnel.git
+cd agent-wind-tunnel
+npm ci
+npm test
+node agent-wind-tunnel.mjs inspect
+node agent-wind-tunnel.mjs demo
+npm run verify:fixture</code></pre>
+      <p>No API key is required. The generated visual report is written to <code>wind-tunnel-output/fixture/report.html</code>.</p>
+
+      <h2>Architecture</h2>
+      <p>Scenario, SLO, trusted Policy, and Blueprint pass through closed-shape and semantic validation. The compiler binds each accepted route outcome to implemented behavior. The runner reserves resources, invokes one role at a time or a bounded parallel wave, validates the returned contract, and records the exact node and edge. A broker mediates capabilities and the data-only effect simulation.</p>
+      <p>The Blueprint node kinds are <code>model</code>, <code>deterministic</code>, <code>fork</code>, <code>join</code>, <code>approval</code>, <code>effect</code>, and <code>terminal</code>. Every node, edge, and cycle is finite.</p>
+
+      <h2>Selection</h2>
+      <ol>
+        <li>Reject structurally invalid candidates.</li>
+        <li>Reject missing mandatory/conformance requirements.</li>
+        <li>Reject contract or bounded-termination failures.</li>
+        <li>Reject authority or approval failures.</li>
+        <li>Reject call, token, latency, or spend-budget failures.</li>
+        <li>Pareto prune feasible candidates.</li>
+        <li>Select the least structurally complex evaluated candidate.</li>
+        <li>Run within-family ablations only after canonical selection.</li>
+      </ol>
+
+      <h2>Portable evidence inputs</h2>
+      <p>Scenario Packs carry source provenance and an explicit claim boundary. Price Cards carry currency, effective date, exact model rates, service/context assumptions, exclusions, and public rate provenance. The runtime validates and snapshots both.</p>
+      <pre><code>node agent-wind-tunnel.mjs validate \
+  --scenario-pack scenarios/enterprise-portfolio/calibration.json
+
+node agent-wind-tunnel.mjs validate \
+  --price-card price-cards/openai-standard-short-context-2026-07-28.json</code></pre>
+
+      <h2>Safe live preview</h2>
+      <pre><code>node agent-wind-tunnel.mjs run \
+  --adapter openai \
+  --dry-run \
+  --scenario operator-doc-gap \
+  --candidates direct,loop \
+  --repetitions 3 \
+  --price-card price-cards/openai-standard-short-context-2026-07-28.json</code></pre>
+      <p>The preview makes zero API calls. Confirmed work separately requires <code>--confirm-live</code>, <code>--max-live-spend-usd</code>, a call envelope below <code>--max-live-calls</code>, and an authorized key. Cost values are estimates, not invoices.</p>
+
+      <h2>Authority</h2>
+      <p>A node request is allowed only when that exact capability and scope were compiled for the requester and already exist in the immutable initial grants. A consequential simulated effect additionally needs a unique dominating approval node and an approval bound to the run, scenario, Blueprint, artifact hash, capability, scope, and effect. The graph cannot grant itself permission.</p>
+
+      <h2>Evidence package</h2>
+      <p>The report includes canonical JSON, a metadata-only role-call trace, a separate exact execution ledger, Markdown/HTML reader surfaces, and a manifest of file membership, bytes, and SHA-256 hashes. Fixture runs are byte-reproducible. Live runs retain IDs, usage, configuration, and nondeterministic status.</p>
+
+      <h2>Deep documentation</h2>
+      <ul>
+        <li><a href="https://github.com/ma-turgeon/agent-wind-tunnel/blob/main/docs/architecture.md">Architecture</a></li>
+        <li><a href="https://github.com/ma-turgeon/agent-wind-tunnel/blob/main/docs/methodology.md">Methodology and validity</a></li>
+        <li><a href="https://github.com/ma-turgeon/agent-wind-tunnel/blob/main/docs/threat-model.md">Threat model</a></li>
+        <li><a href="https://github.com/ma-turgeon/agent-wind-tunnel/blob/main/docs/alternatives.md">Alternatives and complements</a></li>
+        <li><a href="https://github.com/ma-turgeon/agent-wind-tunnel/blob/main/docs/walkthrough.md">Detailed walkthrough</a></li>
+      </ul>
+
+      <h2>Authoritative references</h2>
+      <ul>
+        <li><a href="https://developers.openai.com/api/docs/guides/agent-evals">OpenAI: Evaluate agent workflows</a></li>
+        <li><a href="https://developers.openai.com/api/docs/guides/trace-grading">OpenAI: Trace grading</a></li>
+        <li><a href="https://developers.openai.com/api/docs/guides/migrate-to-responses">OpenAI: Responses API guidance</a></li>
+        <li><a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10">NIST AI Risk Management Framework 1.0</a></li>
+        <li><a href="https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/algorithmic-impact-assessment.html">Government of Canada: Algorithmic Impact Assessment</a></li>
+        <li><a href="https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32592">Government of Canada: Directive on Automated Decision-Making</a></li>
+      </ul>
+    </article>
+  </main>
+  <footer class="footer"><div class="shell"><span>Agent Wind Tunnel · technical guide</span><span><a href="index.html">Home</a> · <a href="report/">Generated report</a></span></div></footer>
+</body>
+</html>

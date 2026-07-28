@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "agent-wind-tunnel.portfolio-dossiers/v1",
+  "id": "enterprise-agentic-ai-portfolio",
+  "disclosure": "Fictional composite data created for an architecture-evaluation demonstration. It contains no organizational, client, citizen, or production information.",
+  "capacityEnvelope": {
+    "unit": "normalized-capacity-points",
+    "available": 40,
+    "note": "Points are comparative planning units, not hours, dollars, headcount, or claimed savings."
+  },
+  "initiatives": [
+    {
+      "id": "portfolio-intake-completeness",
+      "name": "AI initiative intake assistant",
+      "businessOwner": "Enterprise portfolio office",
+      "capacityPoints": 4,
+      "impactLevel": "low",
+      "dataReadiness": "high",
+      "dependencies": [],
+      "decisionQuestion": "Can the assistant normalize intake records without changing prioritization decisions?"
+    },
+    {
+      "id": "capacity-feasible-ranking",
+      "name": "Portfolio ranking copilot",
+      "businessOwner": "Strategy and investment committee",
+      "capacityPoints": 8,
+      "impactLevel": "medium",
+      "dataReadiness": "medium",
+      "dependencies": ["portfolio-intake-completeness"],
+      "decisionQuestion": "Can a recommendation stay within the declared capacity envelope and expose trade-offs?"
+    },
+    {
+      "id": "data-sharing-risk-triage",
+      "name": "Cross-department knowledge assistant",
+      "businessOwner": "Corporate services",
+      "capacityPoints": 7,
+      "impactLevel": "medium",
+      "dataReadiness": "medium",
+      "dependencies": ["information-classification-review"],
+      "decisionQuestion": "Can the pilot separate useful retrieval from privacy and security authorization?"
+    },
+    {
+      "id": "high-impact-approval-routing",
+      "name": "Citizen-service decision support",
+      "businessOwner": "Public service delivery",
+      "capacityPoints": 10,
+      "impactLevel": "high",
+      "dataReadiness": "low",
+      "dependencies": ["algorithmic-impact-assessment", "human-oversight-design"],
+      "decisionQuestion": "Can the system prepare evidence without bypassing the accountable human decision?"
+    },
+    {
+      "id": "evidence-gap-resolution",
+      "name": "Benefits-realization evidence assistant",
+      "businessOwner": "Value management office",
+      "capacityPoints": 5,
+      "impactLevel": "low",
+      "dataReadiness": "medium",
+      "dependencies": ["metric-definition-catalog"],
+      "decisionQuestion": "Can the assistant distinguish measured evidence from assumptions and missing data?"
+    },
+    {
+      "id": "cross-functional-dependency-review",
+      "name": "IT change-readiness reviewer",
+      "businessOwner": "Technology operations",
+      "capacityPoints": 7,
+      "impactLevel": "medium",
+      "dataReadiness": "high",
+      "dependencies": ["service-catalog", "change-calendar"],
+      "decisionQuestion": "Can independent reviewers expose both delivery dependencies and accountable ownership?"
+    },
+    {
+      "id": "procurement-copilot-selection",
+      "name": "AI procurement evaluation copilot",
+      "businessOwner": "Procurement and legal",
+      "capacityPoints": 6,
+      "impactLevel": "medium",
+      "dataReadiness": "medium",
+      "dependencies": ["vendor-evidence-room"],
+      "decisionQuestion": "Can the evaluation separate functional fit, supplier risk, and contractual controls?"
+    },
+    {
+      "id": "service-desk-assistant-pilot",
+      "name": "Service-desk resolution assistant",
+      "businessOwner": "IT service management",
+      "capacityPoints": 5,
+      "impactLevel": "low",
+      "dataReadiness": "high",
+      "dependencies": ["approved-knowledge-base"],
+      "decisionQuestion": "Can the pilot improve resolution guidance while escalating uncertainty?"
+    },
+    {
+      "id": "eligibility-decision-support",
+      "name": "Program eligibility decision support",
+      "businessOwner": "Program administration",
+      "capacityPoints": 11,
+      "impactLevel": "high",
+      "dataReadiness": "low",
+      "dependencies": ["algorithmic-impact-assessment", "appeal-process", "human-oversight-design"],
+      "decisionQuestion": "Can an agent prepare a reviewable recommendation while preserving human authority and recourse?"
+    }
+  ]
+}

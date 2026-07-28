@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/agent-wind-tunnel/portfolio-dossiers.schema.json",
+  "title": "Agent Wind Tunnel Portfolio Dossiers",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "disclosure",
+    "capacityEnvelope",
+    "initiatives"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "agent-wind-tunnel.portfolio-dossiers/v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "disclosure": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capacityEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit", "available", "note"],
+      "properties": {
+        "unit": {
+          "const": "normalized-capacity-points"
+        },
+        "available": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "initiatives": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "businessOwner",
+          "capacityPoints",
+          "impactLevel",
+          "dataReadiness",
+          "dependencies",
+          "decisionQuestion"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "businessOwner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "capacityPoints": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "impactLevel": {
+            "enum": ["low", "medium", "high"]
+          },
+          "dataReadiness": {
+            "enum": ["low", "medium", "high"]
+          },
+          "dependencies": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "decisionQuestion": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

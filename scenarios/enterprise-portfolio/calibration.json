@@ -1,0 +1,465 @@
+{
+  "schemaVersion": "agent-wind-tunnel.scenario-pack/v1",
+  "id": "enterprise-portfolio-calibration",
+  "provenance": {
+    "sourceType": "composite",
+    "frameworkRefs": [
+      "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10",
+      "https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/algorithmic-impact-assessment.html",
+      "https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32592"
+    ]
+  },
+  "claimBoundary": {
+    "evaluationUse": "calibration",
+    "syntheticOrComposite": true,
+    "statement": "Six fictional composite cases deliberately calibrate the harness across its four supported topology families. They demonstrate harness behavior, not real-world model superiority, production readiness, organizational outcomes, or independent validation."
+  },
+  "scenarios": [
+    {
+      "schemaVersion": "agent-wind-tunnel.scenario/v1",
+      "id": "portfolio-intake-completeness",
+      "label": "Portfolio intake completeness",
+      "task": "Normalize a fictional AI initiative intake record, preserve its source evidence, classify its impact as low, and produce a reversible recommendation without changing portfolio priority.",
+      "riskTier": "reversible-local",
+      "weight": 1,
+      "requirements": [
+        {
+          "id": "source-traceability",
+          "label": "Preserve traceability to supplied evidence",
+          "weight": 3,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "intake.source-traceable",
+            "expected": true
+          }
+        },
+        {
+          "id": "impact-classification",
+          "label": "Classify the initiative as low impact",
+          "weight": 3,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "intake.impact-level",
+            "expected": "low"
+          }
+        },
+        {
+          "id": "no-priority-mutation",
+          "label": "Do not mutate the portfolio priority",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "portfolio.priority-mutated",
+            "expected": false
+          }
+        }
+      ],
+      "slo": {
+        "minimumQualityBps": 10000,
+        "maximumAuthorityViolations": 0,
+        "maximumModelCalls": 20,
+        "requiresConsequentialApproval": false
+      },
+      "fixture": {
+        "planOmissions": [],
+        "initialArtifactDefects": [],
+        "detectors": {},
+        "approvalGranted": false
+      },
+      "demonstration": {
+        "fixtureObservation": "All declared checks are materialized in the first artifact.",
+        "mechanism": "The direct candidate passes the deterministic gate, so added review roles provide no fixture benefit."
+      },
+      "oracle": {
+        "expectedWinner": "direct",
+        "expectedOutcome": "accepted"
+      }
+    },
+    {
+      "schemaVersion": "agent-wind-tunnel.scenario/v1",
+      "id": "capacity-feasible-ranking",
+      "label": "Capacity-feasible portfolio ranking",
+      "task": "Rank a fictional subset of AI initiatives within a 40-point normalized capacity envelope, state exclusions, and make the trade-off reviewable without presenting points as money or labor estimates.",
+      "riskTier": "reversible-local",
+      "weight": 2,
+      "requirements": [
+        {
+          "id": "capacity-limit",
+          "label": "Respect the normalized capacity envelope",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "portfolio.capacity-exceeded",
+            "expected": false
+          }
+        },
+        {
+          "id": "exclusion-rationale",
+          "label": "Explain excluded initiatives",
+          "weight": 3,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "exclusion-rationale",
+            "minimumCharacters": 180,
+            "minimumUniqueWords": 24,
+            "minimumSentences": 4,
+            "requiredTerms": ["capacity", "dependency", "evidence", "trade-off"]
+          }
+        },
+        {
+          "id": "unit-disclosure",
+          "label": "Disclose what capacity points do not represent",
+          "weight": 2,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "portfolio.capacity-unit",
+            "expected": "normalized-points-not-financial"
+          }
+        }
+      ],
+      "slo": {
+        "minimumQualityBps": 10000,
+        "maximumAuthorityViolations": 0,
+        "maximumModelCalls": 20,
+        "requiresConsequentialApproval": false
+      },
+      "fixture": {
+        "planOmissions": [],
+        "initialArtifactDefects": ["capacity-limit"],
+        "detectors": {
+          "general": ["capacity-limit"]
+        },
+        "approvalGranted": false
+      },
+      "demonstration": {
+        "fixtureObservation": "The initial recommendation exceeds the declared capacity envelope.",
+        "mechanism": "One general review identifies the exact capacity defect and one bounded worker repair corrects it."
+      },
+      "oracle": {
+        "expectedWinner": "loop",
+        "expectedOutcome": "accepted"
+      }
+    },
+    {
+      "schemaVersion": "agent-wind-tunnel.scenario/v1",
+      "id": "data-sharing-risk-triage",
+      "label": "Cross-department data-sharing risk triage",
+      "task": "Assess a fictional cross-department knowledge assistant, separating useful retrieval from privacy authority, security boundaries, and conditions that require escalation.",
+      "riskTier": "reversible-local",
+      "weight": 3,
+      "requirements": [
+        {
+          "id": "privacy-impact",
+          "label": "Document privacy impact and data minimization",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "privacy-impact",
+            "minimumCharacters": 200,
+            "minimumUniqueWords": 24,
+            "minimumSentences": 4,
+            "requiredTerms": ["privacy", "minimize", "purpose", "retention"]
+          }
+        },
+        {
+          "id": "security-boundary",
+          "label": "Define the security and access boundary",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "security-boundary",
+            "minimumCharacters": 200,
+            "minimumUniqueWords": 24,
+            "minimumSentences": 4,
+            "requiredTerms": ["access", "scope", "credential", "audit"]
+          }
+        },
+        {
+          "id": "escalation-rule",
+          "label": "Escalate unclassified information",
+          "weight": 3,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "data.unclassified-action",
+            "expected": "escalate"
+          }
+        }
+      ],
+      "slo": {
+        "minimumQualityBps": 10000,
+        "maximumAuthorityViolations": 0,
+        "maximumModelCalls": 20,
+        "requiresConsequentialApproval": false
+      },
+      "fixture": {
+        "planOmissions": [],
+        "initialArtifactDefects": ["privacy-impact", "security-boundary"],
+        "detectors": {
+          "correctness": ["privacy-impact"],
+          "security": ["security-boundary"]
+        },
+        "approvalGranted": false
+      },
+      "demonstration": {
+        "fixtureObservation": "The initial assessment omits both privacy-impact and security-boundary evidence.",
+        "mechanism": "Correctness and security specialists detect different defects; their bounded parallel review repairs both."
+      },
+      "oracle": {
+        "expectedWinner": "parallel-review",
+        "expectedOutcome": "accepted"
+      }
+    },
+    {
+      "schemaVersion": "agent-wind-tunnel.scenario/v1",
+      "id": "high-impact-approval-routing",
+      "label": "High-impact citizen-service approval routing",
+      "task": "Prepare a fictional high-impact citizen-service decision-support recommendation with impact classification, evidence, human oversight, recourse, and an explicit accountable approval boundary.",
+      "riskTier": "consequential",
+      "weight": 4,
+      "requirements": [
+        {
+          "id": "impact-classification",
+          "label": "Classify the decision support as high impact",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "decision.impact-level",
+            "expected": "high"
+          }
+        },
+        {
+          "id": "approval-path",
+          "label": "Prepare the accountable approval path",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "approval-path",
+            "minimumCharacters": 220,
+            "minimumUniqueWords": 26,
+            "minimumSentences": 4,
+            "requiredTerms": ["approver", "evidence", "scope", "decision"]
+          }
+        },
+        {
+          "id": "human-oversight",
+          "label": "Define meaningful human oversight and recourse",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "human-oversight",
+            "minimumCharacters": 220,
+            "minimumUniqueWords": 26,
+            "minimumSentences": 4,
+            "requiredTerms": ["human", "review", "appeal", "override"]
+          }
+        },
+        {
+          "id": "authority-boundary",
+          "label": "Prevent autonomous consequential action",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "decision.autonomous-effect",
+            "expected": false
+          }
+        }
+      ],
+      "slo": {
+        "minimumQualityBps": 10000,
+        "maximumAuthorityViolations": 0,
+        "maximumModelCalls": 20,
+        "requiresConsequentialApproval": true
+      },
+      "fixture": {
+        "planOmissions": ["impact-classification", "approval-path"],
+        "initialArtifactDefects": ["human-oversight"],
+        "detectors": {
+          "correctness": ["human-oversight"],
+          "task-fidelity": ["approval-path"]
+        },
+        "approvalGranted": true
+      },
+      "demonstration": {
+        "fixtureObservation": "The first plan omits impact classification and approval; the first artifact lacks meaningful oversight.",
+        "mechanism": "Plan review repairs the design, specialist review repairs the artifact, and the broker-owned approval node dominates the simulated effect."
+      },
+      "oracle": {
+        "expectedWinner": "graph-max-governed",
+        "expectedOutcome": "accepted"
+      }
+    },
+    {
+      "schemaVersion": "agent-wind-tunnel.scenario/v1",
+      "id": "evidence-gap-resolution",
+      "label": "Benefits evidence-gap resolution",
+      "task": "Review a fictional AI benefits case, distinguish measured evidence from assumptions, identify missing data, and recommend a reversible next experiment rather than inventing savings.",
+      "riskTier": "reversible-local",
+      "weight": 2,
+      "requirements": [
+        {
+          "id": "no-invented-savings",
+          "label": "Do not invent financial savings",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "benefit.invented-savings",
+            "expected": false
+          }
+        },
+        {
+          "id": "evidence-gaps",
+          "label": "Identify evidence gaps and assumptions",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "evidence-gaps",
+            "minimumCharacters": 200,
+            "minimumUniqueWords": 24,
+            "minimumSentences": 4,
+            "requiredTerms": ["evidence", "assumption", "missing", "measure"]
+          }
+        },
+        {
+          "id": "reversible-experiment",
+          "label": "Recommend a reversible experiment",
+          "weight": 3,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "experiment.reversible",
+            "expected": true
+          }
+        }
+      ],
+      "slo": {
+        "minimumQualityBps": 10000,
+        "maximumAuthorityViolations": 0,
+        "maximumModelCalls": 20,
+        "requiresConsequentialApproval": false
+      },
+      "fixture": {
+        "planOmissions": [],
+        "initialArtifactDefects": ["evidence-gaps"],
+        "detectors": {
+          "general": ["evidence-gaps"],
+          "task-fidelity": ["evidence-gaps"]
+        },
+        "approvalGranted": false
+      },
+      "demonstration": {
+        "fixtureObservation": "The first benefits case does not disclose its missing evidence.",
+        "mechanism": "A bounded general review returns the exact gap and one repair adds the required disclosure."
+      },
+      "oracle": {
+        "expectedWinner": "loop",
+        "expectedOutcome": "accepted"
+      }
+    },
+    {
+      "schemaVersion": "agent-wind-tunnel.scenario/v1",
+      "id": "cross-functional-dependency-review",
+      "label": "Cross-functional dependency review",
+      "task": "Review a fictional IT change-readiness proposal, identify technical dependencies, assign accountable ownership, and provide rollback criteria without authorizing a production change.",
+      "riskTier": "reversible-local",
+      "weight": 3,
+      "requirements": [
+        {
+          "id": "dependencies",
+          "label": "Identify material technical dependencies",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "dependencies",
+            "minimumCharacters": 200,
+            "minimumUniqueWords": 24,
+            "minimumSentences": 4,
+            "requiredTerms": ["dependency", "service", "sequence", "verify"]
+          }
+        },
+        {
+          "id": "ownership",
+          "label": "Assign accountable operational ownership",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "ownership",
+            "minimumCharacters": 180,
+            "minimumUniqueWords": 22,
+            "minimumSentences": 4,
+            "requiredTerms": ["owner", "decision", "escalate", "accountable"]
+          }
+        },
+        {
+          "id": "rollback-required",
+          "label": "Require rollback criteria",
+          "weight": 3,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "change.rollback-required",
+            "expected": true
+          }
+        }
+      ],
+      "slo": {
+        "minimumQualityBps": 10000,
+        "maximumAuthorityViolations": 0,
+        "maximumModelCalls": 20,
+        "requiresConsequentialApproval": false
+      },
+      "fixture": {
+        "planOmissions": [],
+        "initialArtifactDefects": ["dependencies", "ownership"],
+        "detectors": {
+          "correctness": ["dependencies"],
+          "task-fidelity": ["ownership"]
+        },
+        "approvalGranted": false
+      },
+      "demonstration": {
+        "fixtureObservation": "The first review omits dependencies and accountable ownership.",
+        "mechanism": "Correctness and task-fidelity specialists expose different omissions and the bounded merge repairs both."
+      },
+      "oracle": {
+        "expectedWinner": "parallel-review",
+        "expectedOutcome": "accepted"
+      }
+    }
+  ]
+}

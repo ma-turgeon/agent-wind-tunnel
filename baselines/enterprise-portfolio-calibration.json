@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "agent-wind-tunnel.recommendation-baseline/v1",
+  "portfolioRecommendation": "graph-max-governed",
+  "scenarioRecommendations": {
+    "portfolio-intake-completeness": "direct",
+    "capacity-feasible-ranking": "loop",
+    "data-sharing-risk-triage": "parallel-review",
+    "high-impact-approval-routing": "graph-max-governed",
+    "evidence-gap-resolution": "loop",
+    "cross-functional-dependency-review": "parallel-review"
+  }
+}

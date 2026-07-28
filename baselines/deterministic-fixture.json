@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "agent-wind-tunnel.recommendation-baseline/v1",
+  "portfolioRecommendation": "graph-max-governed",
+  "scenarioRecommendations": {
+    "simple-transform": "direct",
+    "operator-doc-gap": "loop",
+    "cross-domain-release": "parallel-review",
+    "consequential-deploy": "graph-max-governed"
+  }
+}

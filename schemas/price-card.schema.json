@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/agent-wind-tunnel/price-card.schema.json",
+  "title": "Agent Wind Tunnel Price Card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "currency",
+    "effectiveDate",
+    "provenance",
+    "models"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "agent-wind-tunnel.price-card/v1"
+    },
+    "currency": {
+      "const": "USD"
+    },
+    "effectiveDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceUrl",
+        "retrievedAt",
+        "serviceTier",
+        "contextTier",
+        "regionalUpliftAssumption",
+        "notes",
+        "claimBoundary"
+      ],
+      "properties": {
+        "sourceUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "retrievedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "serviceTier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contextTier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "regionalUpliftAssumption": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claimBoundary": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "inputUsdPerMillionTokens",
+          "cachedInputUsdPerMillionTokens",
+          "cacheWriteInputUsdPerMillionTokens",
+          "outputUsdPerMillionTokens"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:-]{0,127}$"
+          },
+          "inputUsdPerMillionTokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "cachedInputUsdPerMillionTokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "cacheWriteInputUsdPerMillionTokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "outputUsdPerMillionTokens": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}

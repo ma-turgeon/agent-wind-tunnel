@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "agent-wind-tunnel.recommendation-baseline/v1",
+  "portfolioRecommendation": "graph-max-governed",
+  "scenarioRecommendations": {
+    "procurement-copilot-selection": "parallel-review",
+    "service-desk-assistant-pilot": "loop",
+    "eligibility-decision-support": "graph-max-governed"
+  }
+}

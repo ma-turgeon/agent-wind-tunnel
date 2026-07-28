@@ -1,0 +1,102 @@
+name: Agent Wind Tunnel deterministic check
+description: Run the offline architecture tournament, verify its evidence, and enforce an approved recommendation baseline without enabling live calls.
+
+inputs:
+  node-version:
+    description: Node.js version used by the check
+    required: false
+    default: "22.x"
+  working-directory:
+    description: Directory containing the Agent Wind Tunnel package
+    required: false
+    default: "."
+  output-directory:
+    description: Fixture output directory, relative to the working directory
+    required: false
+    default: ".ci-output/fixture"
+  scenario-pack:
+    description: Path to a reviewed scenario-pack JSON file; empty uses the built-in deterministic calibration corpus
+    required: false
+    default: ""
+  baseline:
+    description: Path to the approved recommendation-baseline JSON file
+    required: false
+    default: "baselines/deterministic-fixture.json"
+  fail-on-regression:
+    description: Fail when the observed recommendation set differs from the approved baseline
+    required: false
+    default: "true"
+
+outputs:
+  report-path:
+    description: Absolute path to the generated HTML report
+    value: ${{ steps.baseline.outputs.report-path }}
+  results-path:
+    description: Absolute path to the generated machine-readable results
+    value: ${{ steps.baseline.outputs.results-path }}
+  recommendation:
+    description: Whole-corpus architecture recommendation
+    value: ${{ steps.baseline.outputs.recommendation }}
+  baseline-status:
+    description: Whether the recommendation set matched the approved baseline
+    value: ${{ steps.baseline.outputs.baseline-status }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: npm
+        cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+
+    - name: Install locked dependencies
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: npm ci --ignore-scripts
+
+    - name: Verify test inventory and run suite with coverage floors
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: npm run check:tests
+
+    - name: Verify checked-in public live evidence
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: npm run verify:evidence
+
+    - name: Generate deterministic fixture
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        AWT_OUTPUT_DIRECTORY: ${{ inputs.output-directory }}
+        AWT_SCENARIO_PACK: ${{ inputs.scenario-pack }}
+        OPENAI_API_KEY: ""
+      run: |
+        arguments=(demo --output "$AWT_OUTPUT_DIRECTORY")
+        if [[ -n "$AWT_SCENARIO_PACK" ]]; then
+          arguments+=(--scenario-pack "$AWT_SCENARIO_PACK")
+        fi
+        node agent-wind-tunnel.mjs "${arguments[@]}"
+
+    - name: Verify artifact integrity
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        AWT_OUTPUT_DIRECTORY: ${{ inputs.output-directory }}
+      run: node scripts/verify-artifacts.mjs "$AWT_OUTPUT_DIRECTORY"
+
+    - name: Enforce approved recommendation baseline
+      id: baseline
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        AWT_OUTPUT_DIRECTORY: ${{ inputs.output-directory }}
+        AWT_BASELINE: ${{ inputs.baseline }}
+        AWT_FAIL_ON_REGRESSION: ${{ inputs.fail-on-regression }}
+      run: >-
+        node scripts/check-baseline.mjs
+        "$AWT_OUTPUT_DIRECTORY/results.json"
+        "$AWT_BASELINE"
+        "$AWT_FAIL_ON_REGRESSION"

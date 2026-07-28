@@ -1,0 +1,287 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/agent-wind-tunnel/blueprint.schema.json",
+  "title": "Agent Wind Tunnel Blueprint IR",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "label",
+    "source",
+    "entryNode",
+    "terminalNodes",
+    "stateContract",
+    "budgets",
+    "nodes",
+    "edges",
+    "features"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "agent-wind-tunnel.blueprint/v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object"
+    },
+    "entryNode": {
+      "type": "string",
+      "minLength": 1
+    },
+    "terminalNodes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "stateContract": {
+      "const": "agent-wind-tunnel.state/v1"
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxNodeVisits",
+        "maxModelCalls",
+        "maxTokenUnits",
+        "maxLatencyTicks",
+        "maxRetries"
+      ],
+      "properties": {
+        "maxNodeVisits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxModelCalls": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxTokenUnits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxLatencyTicks": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxRetries": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planning",
+        "planReview",
+        "speculativeWorker",
+        "reviewers",
+        "modelSynthesis",
+        "presenter",
+        "approvalGate",
+        "effectNode",
+        "maxRepairRounds"
+      ],
+      "properties": {
+        "planning": {
+          "type": "boolean"
+        },
+        "planReview": {
+          "type": "boolean"
+        },
+        "speculativeWorker": {
+          "type": "boolean"
+        },
+        "reviewers": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "modelSynthesis": {
+          "type": "boolean"
+        },
+        "presenter": {
+          "type": "boolean"
+        },
+        "approvalGate": {
+          "type": "boolean"
+        },
+        "effectNode": {
+          "type": "boolean"
+        },
+        "maxRepairRounds": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "capabilityRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability",
+        "scopes"
+      ],
+      "properties": {
+        "capability": {
+          "type": "string"
+        },
+        "scopes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "role",
+        "thread",
+        "inputContract",
+        "outputContract",
+        "capabilities",
+        "maxVisits",
+        "tags",
+        "origin"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "model",
+            "deterministic",
+            "fork",
+            "join",
+            "approval",
+            "effect",
+            "terminal"
+          ]
+        },
+        "role": {
+          "type": "string"
+        },
+        "thread": {
+          "enum": [
+            "none",
+            "ephemeral",
+            "persistent",
+            "broker-owned"
+          ]
+        },
+        "inputContract": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "outputContract": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capabilityRequest"
+          }
+        },
+        "maxVisits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "origin": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "from",
+        "to",
+        "when",
+        "maxTraversals"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "when": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "outcomeIn"
+          ],
+          "properties": {
+            "outcomeIn": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "maxTraversals": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

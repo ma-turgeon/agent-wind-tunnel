@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="520" viewBox="0 0 1400 520" role="img" aria-labelledby="title desc">
+  <title id="title">Agent Wind Tunnel selection pipeline</title>
+  <desc id="desc">Scenarios, service objectives, trusted policy, and bounded blueprints pass through static validation, exact execution, hard gates, and minimum feasible selection before producing a reproducible evidence package.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071525"/>
+      <stop offset="1" stop-color="#102a43"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#58c4dc"/>
+    </marker>
+    <style>
+      .title { font-family: "DejaVu Sans"; font-size: 34px; font-weight: 700; fill: #f7fbff; }
+      .subtitle { font-family: "DejaVu Sans"; font-size: 17px; font-weight: 400; fill: #b8c7d9; }
+      .step { fill: #102f48; stroke: #58c4dc; stroke-width: 2; }
+      .gate { fill: #173a37; stroke: #69d6a3; stroke-width: 2; }
+      .output { fill: #382b57; stroke: #b59cff; stroke-width: 2; }
+      .label { font-family: "DejaVu Sans"; font-size: 18px; font-weight: 700; fill: #f7fbff; text-anchor: middle; }
+      .detail { font-family: "DejaVu Sans"; font-size: 14px; font-weight: 400; fill: #cbd8e6; text-anchor: middle; }
+      .small { font-family: "DejaVu Sans"; font-size: 13px; font-weight: 600; fill: #9ee7bd; text-anchor: middle; letter-spacing: .6px; }
+      .line { stroke: #58c4dc; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1400" height="520" rx="28" fill="url(#bg)"/>
+  <text x="70" y="68" class="title">Architecture selection as a controlled experiment</text>
+  <text x="70" y="101" class="subtitle">Hard requirements decide feasibility. Complexity breaks ties only after every gate passes.</text>
+
+  <rect x="55" y="165" width="235" height="190" rx="20" class="step"/>
+  <text x="172.5" y="205" class="label">Declared inputs</text>
+  <text x="172.5" y="240" class="detail">Scenario + requirements</text>
+  <text x="172.5" y="266" class="detail">SLOs + budgets</text>
+  <text x="172.5" y="292" class="detail">Trusted Policy</text>
+  <text x="172.5" y="318" class="detail">Bounded Blueprints</text>
+
+  <path d="M290 260 H350" class="line"/>
+
+  <rect x="355" y="165" width="235" height="190" rx="20" class="step"/>
+  <text x="472.5" y="205" class="label">Validate + compile</text>
+  <text x="472.5" y="240" class="detail">Closed contracts</text>
+  <text x="472.5" y="266" class="detail">Finite routes</text>
+  <text x="472.5" y="292" class="detail">Capability envelope</text>
+  <text x="472.5" y="318" class="detail">Approval dominance</text>
+
+  <path d="M590 260 H650" class="line"/>
+
+  <rect x="655" y="165" width="235" height="190" rx="20" class="step"/>
+  <text x="772.5" y="205" class="label">Execute exactly</text>
+  <text x="772.5" y="240" class="detail">Scenario × topology</text>
+  <text x="772.5" y="266" class="detail">Node/edge ledger</text>
+  <text x="772.5" y="292" class="detail">Bounded retries</text>
+  <text x="772.5" y="318" class="detail">Authority audit</text>
+
+  <path d="M890 260 H950" class="line"/>
+
+  <rect x="955" y="145" width="235" height="230" rx="20" class="gate"/>
+  <text x="1072.5" y="188" class="small">HARD GATES</text>
+  <text x="1072.5" y="223" class="label">Reject first</text>
+  <text x="1072.5" y="258" class="detail">Conformance</text>
+  <text x="1072.5" y="284" class="detail">Contract + reliability</text>
+  <text x="1072.5" y="310" class="detail">Authority</text>
+  <text x="1072.5" y="336" class="detail">Call/token/latency/spend</text>
+
+  <path d="M1190 260 H1250" class="line"/>
+
+  <rect x="1255" y="165" width="105" height="190" rx="20" class="output"/>
+  <text x="1307.5" y="212" class="label" font-size="16">Select</text>
+  <text x="1307.5" y="246" class="detail">Pareto</text>
+  <text x="1307.5" y="270" class="detail">then least</text>
+  <text x="1307.5" y="294" class="detail">complex</text>
+  <text x="1307.5" y="326" class="small" fill="#d8ccff">EVIDENCE</text>
+
+  <rect x="250" y="416" width="900" height="60" rx="16" fill="#0b2032" stroke="#31536e"/>
+  <text x="700" y="441" class="label">Output: recommendation + exact route + provenance + reproducible artifacts</text>
+  <text x="700" y="464" class="detail">Fixture calibration and live empirical evidence remain separate</text>
+</svg>

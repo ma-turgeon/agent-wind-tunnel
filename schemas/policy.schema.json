@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/agent-wind-tunnel/policy.schema.json",
+  "title": "Agent Wind Tunnel Authority Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "capabilityCatalog",
+    "initialGrants"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "agent-wind-tunnel.policy/v1"
+    },
+    "capabilityCatalog": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "effectClass",
+          "allowedScopes",
+          "approval"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "effectClass": {
+            "enum": [
+              "observe",
+              "reversible-local",
+              "consequential"
+            ]
+          },
+          "allowedScopes": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "approval": {
+            "enum": [
+              "none",
+              "explicit-human"
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "effectClass": {
+                  "const": "consequential"
+                }
+              },
+              "required": [
+                "effectClass"
+              ]
+            },
+            "then": {
+              "properties": {
+                "approval": {
+                  "const": "explicit-human"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "approval": {
+                  "const": "none"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "initialGrants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "capability",
+          "scopes"
+        ],
+        "properties": {
+          "capability": {
+            "type": "string"
+          },
+          "scopes": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

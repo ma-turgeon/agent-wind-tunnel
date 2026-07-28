@@ -1,0 +1,636 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ma-turgeon.github.io/agent-wind-tunnel/schemas/public-live-evidence.schema.json",
+  "title": "Agent Wind Tunnel Public Live Evidence",
+  "description": "Strict public projection of a bounded live Agent Wind Tunnel pilot. Cross-record arithmetic and checked-in file hashes are verified by scripts/verify-public-live-evidence.mjs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "study",
+    "authorization",
+    "observed",
+    "candidateAggregates",
+    "runs",
+    "decision",
+    "provenance",
+    "claimBoundary"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/public-live-evidence.schema.json"
+    },
+    "schemaVersion": {
+      "const": "agent-wind-tunnel.public-live-evidence/v1"
+    },
+    "study": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "executedAt",
+        "sourceVersion",
+        "harnessVersion",
+        "executionMode",
+        "provider",
+        "model",
+        "reasoningEffort",
+        "scenario",
+        "candidates",
+        "repetitionsPerCandidate",
+        "semanticGrader",
+        "evaluationBoundary"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/shortText"
+        },
+        "executedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,3})?Z$"
+        },
+        "sourceVersion": {
+          "type": "string",
+          "pattern": "^agent-wind-tunnel@\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$",
+          "maxLength": 96
+        },
+        "harnessVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$",
+          "maxLength": 64
+        },
+        "executionMode": {
+          "const": "live"
+        },
+        "provider": {
+          "$ref": "#/$defs/modelId"
+        },
+        "model": {
+          "$ref": "#/$defs/modelId"
+        },
+        "reasoningEffort": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+            "ultra"
+          ]
+        },
+        "scenario": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "label",
+            "task",
+            "synthetic"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "label": {
+              "$ref": "#/$defs/shortText"
+            },
+            "task": {
+              "$ref": "#/$defs/text"
+            },
+            "synthetic": {
+              "type": "boolean"
+            }
+          }
+        },
+        "candidates": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "repetitionsPerCandidate": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "semanticGrader": {
+          "$ref": "#/$defs/shortText"
+        },
+        "evaluationBoundary": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumLiveCalls",
+        "plannedCallUpperBound",
+        "maximumLiveSpendUsd",
+        "plannedSpendUpperBoundUsd"
+      ],
+      "properties": {
+        "maximumLiveCalls": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plannedCallUpperBound": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maximumLiveSpendUsd": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "plannedSpendUpperBoundUsd": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "observed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runs",
+        "acceptedRuns",
+        "modelCalls",
+        "inputTokens",
+        "cachedInputTokens",
+        "cacheWriteInputTokens",
+        "outputTokens",
+        "totalTokens",
+        "tokenUnits",
+        "retries",
+        "estimatedCostUsd",
+        "elapsedMsSum",
+        "maxSingleRunElapsedMs",
+        "authorityViolations",
+        "contractErrors"
+      ],
+      "properties": {
+        "runs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "acceptedRuns": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "modelCalls": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "inputTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "cachedInputTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "cacheWriteInputTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "outputTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "totalTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "tokenUnits": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "retries": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "estimatedCostUsd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "elapsedMsSum": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "maxSingleRunElapsedMs": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "authorityViolations": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "contractErrors": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        }
+      }
+    },
+    "candidateAggregates": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "$ref": "#/$defs/candidateAggregate"
+      }
+    },
+    "runs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1600,
+      "items": {
+        "$ref": "#/$defs/run"
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "recommendedCandidate",
+        "paretoFrontier",
+        "selectionRule",
+        "reason"
+      ],
+      "properties": {
+        "status": {
+          "const": "RECOMMENDED"
+        },
+        "recommendedCandidate": {
+          "$ref": "#/$defs/id"
+        },
+        "paretoFrontier": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "selectionRule": {
+          "$ref": "#/$defs/text"
+        },
+        "reason": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publicProjection",
+        "sourceRun",
+        "priceCard"
+      ],
+      "properties": {
+        "publicProjection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "description",
+            "excludes",
+            "rawBundlePublished"
+          ],
+          "properties": {
+            "description": {
+              "$ref": "#/$defs/text"
+            },
+            "excludes": {
+              "$ref": "#/$defs/textList"
+            },
+            "rawBundlePublished": {
+              "const": false
+            }
+          }
+        },
+        "sourceRun": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "runId",
+            "manifestSha256",
+            "resultsSha256",
+            "reportMarkdownSha256",
+            "priceCardSnapshotSha256",
+            "commitmentBoundary"
+          ],
+          "properties": {
+            "runId": {
+              "$ref": "#/$defs/id"
+            },
+            "manifestSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "resultsSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "reportMarkdownSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "priceCardSnapshotSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "commitmentBoundary": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "priceCard": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "fileSha256",
+            "canonicalSha256",
+            "snapshotSha256",
+            "effectiveDate",
+            "currency",
+            "serviceTier",
+            "contextTier",
+            "estimateNotInvoice"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^price-cards\\/[A-Za-z0-9][A-Za-z0-9._-]*\\.json$",
+              "maxLength": 240
+            },
+            "fileSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "canonicalSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "snapshotSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "effectiveDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "currency": {
+              "const": "USD"
+            },
+            "serviceTier": {
+              "$ref": "#/$defs/shortText"
+            },
+            "contextTier": {
+              "$ref": "#/$defs/shortText"
+            },
+            "estimateNotInvoice": {
+              "const": true
+            }
+          }
+        }
+      }
+    },
+    "claimBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supports",
+        "doesNotSupport"
+      ],
+      "properties": {
+        "supports": {
+          "$ref": "#/$defs/textList"
+        },
+        "doesNotSupport": {
+          "$ref": "#/$defs/textList"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "modelId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+    },
+    "textList": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nonnegativeInteger": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "nonnegativeNumber": {
+      "type": "number",
+      "minimum": 0
+    },
+    "complexity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nodes",
+        "edges",
+        "cycles",
+        "approvals",
+        "persistentRoles",
+        "fanOut",
+        "score"
+      ],
+      "properties": {
+        "nodes": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "edges": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "cycles": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "approvals": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "persistentRoles": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "fanOut": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "score": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        }
+      }
+    },
+    "candidateAggregate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidateId",
+        "repetitions",
+        "acceptedRuns",
+        "acceptanceRateBps",
+        "feasible",
+        "qualityBpsMean",
+        "modelCallsMean",
+        "tokenUnitsMean",
+        "latencyMsP95",
+        "estimatedCostMeanUsd",
+        "authorityViolations",
+        "contractErrors",
+        "complexity"
+      ],
+      "properties": {
+        "candidateId": {
+          "$ref": "#/$defs/id"
+        },
+        "repetitions": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "acceptedRuns": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "acceptanceRateBps": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "feasible": {
+          "type": "boolean"
+        },
+        "qualityBpsMean": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "modelCallsMean": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "tokenUnitsMean": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "latencyMsP95": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "estimatedCostMeanUsd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "authorityViolations": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "contractErrors": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "complexity": {
+          "$ref": "#/$defs/complexity"
+        }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidateId",
+        "repetition",
+        "status",
+        "feasible",
+        "qualityBps",
+        "modelCalls",
+        "inputTokens",
+        "cachedInputTokens",
+        "cacheWriteInputTokens",
+        "outputTokens",
+        "totalTokens",
+        "tokenUnits",
+        "latencyMs",
+        "estimatedCostUsd",
+        "retries",
+        "authorityViolations",
+        "contractCompliant"
+      ],
+      "properties": {
+        "candidateId": {
+          "$ref": "#/$defs/id"
+        },
+        "repetition": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "escalated",
+            "rejected",
+            "error"
+          ]
+        },
+        "feasible": {
+          "type": "boolean"
+        },
+        "qualityBps": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "modelCalls": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "inputTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "cachedInputTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "cacheWriteInputTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "outputTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "totalTokens": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "tokenUnits": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "latencyMs": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "estimatedCostUsd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "retries": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "authorityViolations": {
+          "$ref": "#/$defs/nonnegativeInteger"
+        },
+        "contractCompliant": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

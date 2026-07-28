@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="650" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+  <title id="title">Four bounded agent topology families</title>
+  <desc id="desc">A direct worker, a bounded review loop, parallel specialist review, and a governed graph are compared as explicit alternatives. Additional structure is retained only when it satisfies a gate that a smaller candidate misses.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08131f"/>
+      <stop offset="1" stop-color="#162b3f"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#8aa9c1"/>
+    </marker>
+    <style>
+      .title { font-family: "DejaVu Sans"; font-size: 34px; font-weight: 700; fill: #f7fbff; }
+      .subtitle { font-family: "DejaVu Sans"; font-size: 17px; font-weight: 400; fill: #b9c8d8; }
+      .card { fill: #10283b; stroke: #3e647e; stroke-width: 2; }
+      .card-selected { fill: #16372f; stroke: #69d6a3; stroke-width: 2; }
+      .heading { font-family: "DejaVu Sans"; font-size: 21px; font-weight: 700; fill: #f7fbff; text-anchor: middle; }
+      .copy { font-family: "DejaVu Sans"; font-size: 14px; font-weight: 400; fill: #c8d5e2; text-anchor: middle; }
+      .node { fill: #183f59; stroke: #65c6df; stroke-width: 2; }
+      .review { fill: #3c3158; stroke: #b59cff; stroke-width: 2; }
+      .approval { fill: #4a3420; stroke: #f0b56b; stroke-width: 2; }
+      .ntext { font-family: "DejaVu Sans"; font-size: 12px; font-weight: 600; fill: #f8fbff; text-anchor: middle; dominant-baseline: middle; }
+      .edge { stroke: #8aa9c1; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .feedback { stroke: #b59cff; stroke-width: 2; stroke-dasharray: 5 5; fill: none; marker-end: url(#arrow); }
+      .rule { font-family: "DejaVu Sans"; font-size: 18px; font-weight: 700; fill: #9ee7bd; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect width="1400" height="650" rx="28" fill="url(#bg)"/>
+  <text x="60" y="62" class="title">Four alternatives—not four mandatory maturity levels</text>
+  <text x="60" y="95" class="subtitle">The direct baseline remains preferred whenever it already meets every declared requirement.</text>
+
+  <rect x="45" y="135" width="300" height="405" rx="22" class="card"/>
+  <text x="195" y="178" class="heading">1 · Direct</text>
+  <text x="195" y="207" class="copy">Worker + deterministic gate</text>
+  <circle cx="115" cy="320" r="35" class="node"/>
+  <text x="115" y="320" class="ntext">worker</text>
+  <circle cx="260" cy="320" r="35" class="node"/>
+  <text x="260" y="320" class="ntext">verify</text>
+  <path d="M150 320 H217" class="edge"/>
+  <text x="195" y="445" class="copy">Lowest route and operating burden</text>
+  <text x="195" y="472" class="copy">Use when objective checks pass</text>
+
+  <rect x="380" y="135" width="300" height="405" rx="22" class="card"/>
+  <text x="530" y="178" class="heading">2 · Bounded loop</text>
+  <text x="530" y="207" class="copy">Evaluate → repair → re-check</text>
+  <circle cx="450" cy="320" r="35" class="node"/>
+  <text x="450" y="320" class="ntext">worker</text>
+  <circle cx="600" cy="320" r="35" class="review"/>
+  <text x="600" y="320" class="ntext">review</text>
+  <path d="M485 320 H557" class="edge"/>
+  <path d="M600 355 C600 415 450 415 450 358" class="feedback"/>
+  <text x="530" y="445" class="copy">One finite repair mechanism</text>
+  <text x="530" y="472" class="copy">Use for detectable local omissions</text>
+
+  <rect x="715" y="135" width="300" height="405" rx="22" class="card"/>
+  <text x="865" y="178" class="heading">3 · Parallel review</text>
+  <text x="865" y="207" class="copy">Independent specialist branches</text>
+  <circle cx="780" cy="320" r="32" class="node"/>
+  <text x="780" y="320" class="ntext">worker</text>
+  <circle cx="905" cy="275" r="30" class="review"/>
+  <text x="905" y="275" class="ntext">review A</text>
+  <circle cx="905" cy="365" r="30" class="review"/>
+  <text x="905" y="365" class="ntext">review B</text>
+  <circle cx="970" cy="320" r="25" class="node"/>
+  <text x="970" y="320" class="ntext">join</text>
+  <path d="M812 310 L870 286" class="edge"/>
+  <path d="M812 330 L870 354" class="edge"/>
+  <path d="M935 283 L946 305" class="edge"/>
+  <path d="M935 357 L946 335" class="edge"/>
+  <text x="865" y="445" class="copy">Distinct failure domains stay visible</text>
+  <text x="865" y="472" class="copy">Use when both reviews are load-bearing</text>
+
+  <rect x="1050" y="135" width="305" height="405" rx="22" class="card-selected"/>
+  <text x="1202.5" y="178" class="heading">4 · Governed graph</text>
+  <text x="1202.5" y="207" class="copy">Plan, review, approve, simulate</text>
+  <circle cx="1105" cy="300" r="29" class="node"/>
+  <text x="1105" y="300" class="ntext">plan</text>
+  <circle cx="1200" cy="260" r="29" class="review"/>
+  <text x="1200" y="260" class="ntext">review</text>
+  <circle cx="1200" cy="350" r="29" class="node"/>
+  <text x="1200" y="350" class="ntext">work</text>
+  <circle cx="1300" cy="300" r="29" class="approval"/>
+  <text x="1300" y="300" class="ntext">approve</text>
+  <path d="M1134 290 L1167 276" class="edge"/>
+  <path d="M1134 310 L1167 337" class="edge"/>
+  <path d="M1228 270 L1270 289" class="edge"/>
+  <path d="M1229 340 L1270 311" class="edge"/>
+  <text x="1202.5" y="445" class="copy">Explicit authority/effect boundary</text>
+  <text x="1202.5" y="472" class="copy">Use only for declared consequential work</text>
+
+  <path d="M195 575 H1202" stroke="#69d6a3" stroke-width="3"/>
+  <path d="M1202 575 l-12 -7 v14 z" fill="#69d6a3"/>
+  <text x="700" y="615" class="rule">Add structure only when a smaller candidate fails an important gate</text>
+</svg>

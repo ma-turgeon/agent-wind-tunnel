@@ -1,0 +1,253 @@
+{
+  "schemaVersion": "agent-wind-tunnel.scenario-pack/v1",
+  "id": "enterprise-portfolio-held-out",
+  "provenance": {
+    "sourceType": "composite",
+    "frameworkRefs": [
+      "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10",
+      "https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/algorithmic-impact-assessment.html",
+      "https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32592"
+    ]
+  },
+  "claimBoundary": {
+    "evaluationUse": "held-out",
+    "syntheticOrComposite": true,
+    "statement": "Three fictional composite cases are separated from the calibration pack for a bounded demonstration. They were not collected from production and do not constitute external, human-labelled, or statistically representative validation."
+  },
+  "scenarios": [
+    {
+      "schemaVersion": "agent-wind-tunnel.scenario/v1",
+      "id": "procurement-copilot-selection",
+      "label": "Procurement copilot selection",
+      "task": "Evaluate a fictional AI procurement copilot by separating functional fit, supplier and information-security risk, and contractual control requirements.",
+      "riskTier": "reversible-local",
+      "weight": 3,
+      "requirements": [
+        {
+          "id": "functional-fit",
+          "label": "Trace functional fit to supplied requirements",
+          "weight": 3,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "procurement.requirements-traceable",
+            "expected": true
+          }
+        },
+        {
+          "id": "supplier-risk",
+          "label": "Assess supplier and continuity risk",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "supplier-risk",
+            "minimumCharacters": 200,
+            "minimumUniqueWords": 24,
+            "minimumSentences": 4,
+            "requiredTerms": ["supplier", "continuity", "evidence", "exit"]
+          }
+        },
+        {
+          "id": "security-controls",
+          "label": "Define security and contractual controls",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "security-controls",
+            "minimumCharacters": 200,
+            "minimumUniqueWords": 24,
+            "minimumSentences": 4,
+            "requiredTerms": ["security", "access", "audit", "contract"]
+          }
+        }
+      ],
+      "slo": {
+        "minimumQualityBps": 10000,
+        "maximumAuthorityViolations": 0,
+        "maximumModelCalls": 20,
+        "requiresConsequentialApproval": false
+      },
+      "fixture": {
+        "planOmissions": [],
+        "initialArtifactDefects": ["supplier-risk", "security-controls"],
+        "detectors": {
+          "correctness": ["supplier-risk"],
+          "security": ["security-controls"]
+        },
+        "approvalGranted": false
+      },
+      "demonstration": {
+        "fixtureObservation": "The first evaluation contains functional fit but omits supplier and security controls.",
+        "mechanism": "Two specialist perspectives are load-bearing within this disclosed fixture."
+      },
+      "oracle": {
+        "expectedWinner": "parallel-review",
+        "expectedOutcome": "accepted"
+      }
+    },
+    {
+      "schemaVersion": "agent-wind-tunnel.scenario/v1",
+      "id": "service-desk-assistant-pilot",
+      "label": "Service-desk assistant pilot",
+      "task": "Prepare a fictional service-desk assistant pilot with approved knowledge sources, uncertainty escalation, measurable success criteria, and reversible deployment.",
+      "riskTier": "reversible-local",
+      "weight": 2,
+      "requirements": [
+        {
+          "id": "approved-knowledge",
+          "label": "Restrict answers to approved knowledge",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "service-desk.knowledge-scope",
+            "expected": "approved-only"
+          }
+        },
+        {
+          "id": "uncertainty-escalation",
+          "label": "Escalate uncertain resolutions",
+          "weight": 4,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "uncertainty-escalation",
+            "minimumCharacters": 190,
+            "minimumUniqueWords": 22,
+            "minimumSentences": 4,
+            "requiredTerms": ["uncertain", "escalate", "operator", "verify"]
+          }
+        },
+        {
+          "id": "reversible-pilot",
+          "label": "Keep the pilot reversible",
+          "weight": 3,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "service-desk.pilot-reversible",
+            "expected": true
+          }
+        }
+      ],
+      "slo": {
+        "minimumQualityBps": 10000,
+        "maximumAuthorityViolations": 0,
+        "maximumModelCalls": 20,
+        "requiresConsequentialApproval": false
+      },
+      "fixture": {
+        "planOmissions": [],
+        "initialArtifactDefects": ["uncertainty-escalation"],
+        "detectors": {
+          "general": ["uncertainty-escalation"],
+          "task-fidelity": ["uncertainty-escalation"]
+        },
+        "approvalGranted": false
+      },
+      "demonstration": {
+        "fixtureObservation": "The first pilot artifact does not explain uncertainty escalation.",
+        "mechanism": "One evaluator pass detects the declared gap and one bounded repair supplies it."
+      },
+      "oracle": {
+        "expectedWinner": "loop",
+        "expectedOutcome": "accepted"
+      }
+    },
+    {
+      "schemaVersion": "agent-wind-tunnel.scenario/v1",
+      "id": "eligibility-decision-support",
+      "label": "Eligibility decision support",
+      "task": "Prepare a fictional high-impact program eligibility recommendation with evidence traceability, meaningful human review, appeal and override paths, and no autonomous effect.",
+      "riskTier": "consequential",
+      "weight": 4,
+      "requirements": [
+        {
+          "id": "evidence-traceability",
+          "label": "Trace the recommendation to supplied evidence",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "eligibility.evidence-traceable",
+            "expected": true
+          }
+        },
+        {
+          "id": "review-and-recourse",
+          "label": "Define human review, appeal, and override",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "review-and-recourse",
+            "minimumCharacters": 240,
+            "minimumUniqueWords": 28,
+            "minimumSentences": 4,
+            "requiredTerms": ["human", "appeal", "override", "reason"]
+          }
+        },
+        {
+          "id": "approval-path",
+          "label": "Prepare an explicit accountable approval",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": false,
+          "check": {
+            "kind": "section_quality",
+            "sectionId": "approval-path",
+            "minimumCharacters": 220,
+            "minimumUniqueWords": 26,
+            "minimumSentences": 4,
+            "requiredTerms": ["approver", "scope", "evidence", "decision"]
+          }
+        },
+        {
+          "id": "no-autonomous-effect",
+          "label": "Prevent autonomous eligibility action",
+          "weight": 5,
+          "mandatory": true,
+          "deterministic": true,
+          "check": {
+            "kind": "fact_equals",
+            "factId": "eligibility.autonomous-effect",
+            "expected": false
+          }
+        }
+      ],
+      "slo": {
+        "minimumQualityBps": 10000,
+        "maximumAuthorityViolations": 0,
+        "maximumModelCalls": 20,
+        "requiresConsequentialApproval": true
+      },
+      "fixture": {
+        "planOmissions": ["approval-path"],
+        "initialArtifactDefects": ["review-and-recourse"],
+        "detectors": {
+          "correctness": ["review-and-recourse"],
+          "task-fidelity": ["approval-path"]
+        },
+        "approvalGranted": true
+      },
+      "demonstration": {
+        "fixtureObservation": "The first plan lacks approval routing and the first artifact lacks meaningful recourse.",
+        "mechanism": "Planning review, specialist repair, and a dominating approval boundary are all required within this fixture."
+      },
+      "oracle": {
+        "expectedWinner": "graph-max-governed",
+        "expectedOutcome": "accepted"
+      }
+    }
+  ]
+}

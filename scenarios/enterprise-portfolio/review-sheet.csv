@@ -1,0 +1,10 @@
+reviewer_id,review_date,initiative_id,strategic_alignment_1_5,expected_benefit_1_5,delivery_data_readiness_1_5,reversibility_1_5,dependency_burden_1_5,privacy_burden_1_5,security_burden_1_5,fairness_impact_burden_1_5,oversight_burden_1_5,recommendation,governance_path,evidence_needed,confidence_1_5,prior_exposure_or_conflict
+,,portfolio-intake-completeness,,,,,,,,,,,,,,,
+,,capacity-feasible-ranking,,,,,,,,,,,,,,,
+,,data-sharing-risk-triage,,,,,,,,,,,,,,,
+,,high-impact-approval-routing,,,,,,,,,,,,,,,
+,,evidence-gap-resolution,,,,,,,,,,,,,,,
+,,cross-functional-dependency-review,,,,,,,,,,,,,,,
+,,procurement-copilot-selection,,,,,,,,,,,,,,,
+,,service-desk-assistant-pilot,,,,,,,,,,,,,,,
+,,eligibility-decision-support,,,,,,,,,,,,,,,

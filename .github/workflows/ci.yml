@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deterministic-check:
+    name: Node ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["22.x", "24.x"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run deterministic architecture check
+        uses: ./.github/actions/deterministic-check
+        with:
+          node-version: ${{ matrix.node-version }}
+          output-directory: .ci-output/fixture
+
+      - name: Report all named test cases
+        if: matrix.node-version == '24.x'
+        run: npm run test:detailed
+
+      - name: Audit release contents and secrets
+        if: matrix.node-version == '22.x'
+        run: npm run release:audit
+
+      - name: Upload reviewable fixture
+        if: matrix.node-version == '22.x'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: deterministic-wind-tunnel-report
+          path: .ci-output/fixture/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Confirm checks did not rewrite source
+        run: git diff --exit-code
+
+  enterprise-calibration:
+    name: Enterprise calibration (Node 22)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run flagship enterprise calibration
+        uses: ./.github/actions/deterministic-check
+        with:
+          node-version: "22.x"
+          output-directory: .ci-output/enterprise-calibration
+          scenario-pack: scenarios/enterprise-portfolio/calibration.json
+          baseline: baselines/enterprise-portfolio-calibration.json
+
+      - name: Upload enterprise calibration report
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: enterprise-calibration-wind-tunnel-report
+          path: .ci-output/enterprise-calibration/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Confirm calibration did not rewrite source
+        run: git diff --exit-code
+
+  enterprise-held-out:
+    name: Enterprise held-out study (Node 22)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run separated enterprise study
+        uses: ./.github/actions/deterministic-check
+        with:
+          node-version: "22.x"
+          output-directory: .ci-output/enterprise-held-out
+          scenario-pack: scenarios/enterprise-portfolio/held-out.json
+          baseline: baselines/enterprise-portfolio-held-out.json
+
+      - name: Upload held-out study report
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: enterprise-held-out-wind-tunnel-report
+          path: .ci-output/enterprise-held-out/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Confirm held-out study did not rewrite source
+        run: git diff --exit-code

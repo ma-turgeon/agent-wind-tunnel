@@ -1,0 +1,270 @@
+{
+  "$schema": "../schemas/public-live-evidence.schema.json",
+  "schemaVersion": "agent-wind-tunnel.public-live-evidence/v1",
+  "study": {
+    "id": "live-pilot-2026-07-28",
+    "title": "Bounded direct-versus-loop live pilot",
+    "executedAt": "2026-07-28T15:20:22.653Z",
+    "sourceVersion": "agent-wind-tunnel@1.0.0",
+    "harnessVersion": "1.0.0",
+    "executionMode": "live",
+    "provider": "openai",
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "medium",
+    "scenario": {
+      "id": "operator-doc-gap",
+      "label": "Operator-safety documentation gap",
+      "task": "Create a batch preflight analyzer with safe defaults, validation, tests, and an operator runbook.",
+      "synthetic": true
+    },
+    "candidates": [
+      "direct",
+      "loop"
+    ],
+    "repetitionsPerCandidate": 3,
+    "semanticGrader": "none",
+    "evaluationBoundary": "Weighted coverage measures declared deterministic structural and lexical conformance checks. It is not adversarially robust semantic grading; production studies require independent human, model, or executable domain graders."
+  },
+  "authorization": {
+    "maximumLiveCalls": 18,
+    "plannedCallUpperBound": 18,
+    "maximumLiveSpendUsd": 1.5,
+    "plannedSpendUpperBoundUsd": 1.26
+  },
+  "observed": {
+    "runs": 6,
+    "acceptedRuns": 6,
+    "modelCalls": 9,
+    "inputTokens": 7418,
+    "cachedInputTokens": 0,
+    "cacheWriteInputTokens": 0,
+    "outputTokens": 4601,
+    "totalTokens": 12019,
+    "tokenUnits": 12019,
+    "retries": 0,
+    "estimatedCostUsd": 0.08756,
+    "elapsedMsSum": 68066,
+    "maxSingleRunElapsedMs": 17872,
+    "authorityViolations": 0,
+    "contractErrors": 0
+  },
+  "candidateAggregates": [
+    {
+      "candidateId": "direct",
+      "repetitions": 3,
+      "acceptedRuns": 3,
+      "acceptanceRateBps": 10000,
+      "feasible": true,
+      "qualityBpsMean": 10000,
+      "modelCallsMean": 1,
+      "tokenUnitsMean": 1393,
+      "latencyMsP95": 11391,
+      "estimatedCostMeanUsd": 0.0125575,
+      "authorityViolations": 0,
+      "contractErrors": 0,
+      "complexity": {
+        "nodes": 5,
+        "edges": 4,
+        "cycles": 0,
+        "approvals": 0,
+        "persistentRoles": 1,
+        "fanOut": 2,
+        "score": 76
+      }
+    },
+    {
+      "candidateId": "loop",
+      "repetitions": 3,
+      "acceptedRuns": 3,
+      "acceptanceRateBps": 10000,
+      "feasible": true,
+      "qualityBpsMean": 10000,
+      "modelCallsMean": 2,
+      "tokenUnitsMean": 2613.3333333333335,
+      "latencyMsP95": 17872,
+      "estimatedCostMeanUsd": 0.016629166666666667,
+      "authorityViolations": 0,
+      "contractErrors": 0,
+      "complexity": {
+        "nodes": 7,
+        "edges": 8,
+        "cycles": 1,
+        "approvals": 0,
+        "persistentRoles": 1,
+        "fanOut": 4,
+        "score": 137
+      }
+    }
+  ],
+  "runs": [
+    {
+      "candidateId": "direct",
+      "repetition": 1,
+      "status": "accepted",
+      "feasible": true,
+      "qualityBps": 10000,
+      "modelCalls": 1,
+      "inputTokens": 667,
+      "cachedInputTokens": 0,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 643,
+      "totalTokens": 1310,
+      "tokenUnits": 1310,
+      "latencyMs": 11391,
+      "estimatedCostUsd": 0.0113125,
+      "retries": 0,
+      "authorityViolations": 0,
+      "contractCompliant": true
+    },
+    {
+      "candidateId": "direct",
+      "repetition": 2,
+      "status": "accepted",
+      "feasible": true,
+      "qualityBps": 10000,
+      "modelCalls": 1,
+      "inputTokens": 667,
+      "cachedInputTokens": 0,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 747,
+      "totalTokens": 1414,
+      "tokenUnits": 1414,
+      "latencyMs": 8349,
+      "estimatedCostUsd": 0.0128725,
+      "retries": 0,
+      "authorityViolations": 0,
+      "contractCompliant": true
+    },
+    {
+      "candidateId": "direct",
+      "repetition": 3,
+      "status": "accepted",
+      "feasible": true,
+      "qualityBps": 10000,
+      "modelCalls": 1,
+      "inputTokens": 667,
+      "cachedInputTokens": 0,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 788,
+      "totalTokens": 1455,
+      "tokenUnits": 1455,
+      "latencyMs": 8087,
+      "estimatedCostUsd": 0.0134875,
+      "retries": 0,
+      "authorityViolations": 0,
+      "contractCompliant": true
+    },
+    {
+      "candidateId": "loop",
+      "repetition": 1,
+      "status": "accepted",
+      "feasible": true,
+      "qualityBps": 10000,
+      "modelCalls": 2,
+      "inputTokens": 1838,
+      "cachedInputTokens": 0,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 814,
+      "totalTokens": 2652,
+      "tokenUnits": 2652,
+      "latencyMs": 9763,
+      "estimatedCostUsd": 0.016805,
+      "retries": 0,
+      "authorityViolations": 0,
+      "contractCompliant": true
+    },
+    {
+      "candidateId": "loop",
+      "repetition": 2,
+      "status": "accepted",
+      "feasible": true,
+      "qualityBps": 10000,
+      "modelCalls": 2,
+      "inputTokens": 1796,
+      "cachedInputTokens": 0,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 839,
+      "totalTokens": 2635,
+      "tokenUnits": 2635,
+      "latencyMs": 17872,
+      "estimatedCostUsd": 0.017075,
+      "retries": 0,
+      "authorityViolations": 0,
+      "contractCompliant": true
+    },
+    {
+      "candidateId": "loop",
+      "repetition": 3,
+      "status": "accepted",
+      "feasible": true,
+      "qualityBps": 10000,
+      "modelCalls": 2,
+      "inputTokens": 1783,
+      "cachedInputTokens": 0,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 770,
+      "totalTokens": 2553,
+      "tokenUnits": 2553,
+      "latencyMs": 12604,
+      "estimatedCostUsd": 0.0160075,
+      "retries": 0,
+      "authorityViolations": 0,
+      "contractCompliant": true
+    }
+  ],
+  "decision": {
+    "status": "RECOMMENDED",
+    "recommendedCandidate": "direct",
+    "paretoFrontier": [
+      "direct"
+    ],
+    "selectionRule": "Apply hard conformance, reliability, authority, and budget gates; Pareto-prune feasible candidates; then choose the least complex evaluated option.",
+    "reason": "Both evaluated candidates passed every declared gate and tied on rubric-measured quality. Direct was the less complex Pareto-feasible candidate and used fewer calls, token units, observed elapsed time, and estimated spend in this sample."
+  },
+  "provenance": {
+    "publicProjection": {
+      "description": "A curated metrics-only projection of a locally verified live artifact bundle.",
+      "excludes": [
+        "prompt and model-output bodies",
+        "provider request, response, and client identifiers",
+        "execution and trace ledgers"
+      ],
+      "rawBundlePublished": false
+    },
+    "sourceRun": {
+      "runId": "awt-20260728151914-51865b5dd33a",
+      "manifestSha256": "5123f94db6805adec7167cc59a686337d982be561eaf1e4295f933fc040d046b",
+      "resultsSha256": "c651709692ecc9c93ef8bb536097844736f41596ae8a2b0b25a77c4cdc9ff985",
+      "reportMarkdownSha256": "96a82f53f97c8e4ea15cf571e42f2f3056df7dd8683376834dc35833ea22c562",
+      "priceCardSnapshotSha256": "ef8d2432a078c9431e3a385c59cc9b327712aafdc8d5cf1e2398a769474dc2d4",
+      "commitmentBoundary": "These hashes commit to retained private raw files but do not independently authenticate or reproduce the unpublished bundle. The public projection identifies the harness version without publishing a historical Git identifier."
+    },
+    "priceCard": {
+      "path": "price-cards/openai-standard-short-context-2026-07-28.json",
+      "fileSha256": "9c6632c00b3f59f172c6e75eeafaa27e54d12c92fd22a242d8eb678be462b489",
+      "canonicalSha256": "062beac32ddf0f9c4c562c7e6fb6d6ceed225053142d257962d2bfbabfd12e75",
+      "snapshotSha256": "ef8d2432a078c9431e3a385c59cc9b327712aafdc8d5cf1e2398a769474dc2d4",
+      "effectiveDate": "2026-07-28",
+      "currency": "USD",
+      "serviceTier": "standard",
+      "contextTier": "short-context",
+      "estimateNotInvoice": true
+    }
+  },
+  "claimBoundary": {
+    "supports": [
+      "Six nondeterministic live-model runs completed and all six were accepted under the declared local rubric and gates.",
+      "The public per-run observations reconcile to nine model calls, 12019 tokens, zero retries, and a USD 0.08756 price-card estimate.",
+      "Both candidates tied on the declared 10000-basis-point rubric score; direct was selected as the least complex evaluated feasible candidate.",
+      "No authority violation or contract failure was recorded in this six-run sample."
+    ],
+    "doesNotSupport": [
+      "Independent semantic correctness, adversarial robustness, or human-rated output quality.",
+      "A statistically representative latency, reliability, quality, or cost benchmark.",
+      "General superiority across scenarios, models, prompts, organizations, or production workloads.",
+      "Production safety, cost savings, adoption, customer value, or return on investment.",
+      "Provider billing accuracy; all USD values are local estimates from the versioned price card.",
+      "That generated test-case strings were executed; the local rubric counted their declared cases and distinct inputs and outputs."
+    ]
+  }
+}

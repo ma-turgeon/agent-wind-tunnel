@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/agent-wind-tunnel/scenario-pack.schema.json",
+  "title": "Agent Wind Tunnel Scenario Pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "provenance",
+    "claimBoundary",
+    "scenarios"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "agent-wind-tunnel.scenario-pack/v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceType", "frameworkRefs"],
+      "properties": {
+        "sourceType": {
+          "enum": [
+            "synthetic",
+            "composite",
+            "public-benchmark",
+            "organization-internal"
+          ]
+        },
+        "frameworkRefs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "claimBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evaluationUse",
+        "syntheticOrComposite",
+        "statement"
+      ],
+      "properties": {
+        "evaluationUse": {
+          "enum": ["calibration", "held-out"]
+        },
+        "syntheticOrComposite": {
+          "type": "boolean"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "./scenario.schema.json"
+      }
+    }
+  }
+}

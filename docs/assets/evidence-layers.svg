@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="590" viewBox="0 0 1400 590" role="img" aria-labelledby="title desc">
+  <title id="title">Evidence layers and permitted claims</title>
+  <desc id="desc">Deterministic calibration provides strong implementation evidence but weak external validity. Repeated held-out live studies add empirical evidence. Production operation and independent outcomes are required before business or safety claims.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#081522"/>
+      <stop offset="1" stop-color="#162c40"/>
+    </linearGradient>
+    <style>
+      .title { font-family: "DejaVu Sans"; font-size: 34px; font-weight: 700; fill: #f7fbff; }
+      .subtitle { font-family: "DejaVu Sans"; font-size: 17px; font-weight: 400; fill: #b9c8d8; }
+      .layer1 { fill: #18364a; stroke: #63c5dd; stroke-width: 2; }
+      .layer2 { fill: #302b52; stroke: #b59cff; stroke-width: 2; }
+      .layer3 { fill: #173c33; stroke: #69d6a3; stroke-width: 2; }
+      .heading { font-family: "DejaVu Sans"; font-size: 21px; font-weight: 700; fill: #f7fbff; text-anchor: middle; }
+      .copy { font-family: "DejaVu Sans"; font-size: 14px; font-weight: 400; fill: #d0dce7; text-anchor: middle; }
+      .claim { font-family: "DejaVu Sans"; font-size: 14px; font-weight: 700; fill: #fff; text-anchor: middle; }
+      .axis { font-family: "DejaVu Sans"; font-size: 14px; font-weight: 600; fill: #b9c8d8; }
+    </style>
+  </defs>
+  <rect width="1400" height="590" rx="28" fill="url(#bg)"/>
+  <text x="60" y="63" class="title">Do not let a claim climb above its evidence</text>
+  <text x="60" y="97" class="subtitle">The repository is strongest at the first layer; the next two require separate empirical and operational work.</text>
+
+  <rect x="70" y="155" width="390" height="330" rx="22" class="layer1"/>
+  <text x="265" y="197" class="heading">1 · Deterministic calibration</text>
+  <text x="265" y="235" class="copy">Synthetic composite scenarios</text>
+  <text x="265" y="262" class="copy">Exact graph and authority invariants</text>
+  <text x="265" y="289" class="copy">Failure injection + ablations</text>
+  <text x="265" y="316" class="copy">Byte-reproducible artifacts</text>
+  <rect x="105" y="355" width="320" height="82" rx="14" fill="#0c2737"/>
+  <text x="265" y="385" class="claim">Supports:</text>
+  <text x="265" y="411" class="copy">“The harness behaves as declared here.”</text>
+
+  <rect x="505" y="155" width="390" height="330" rx="22" class="layer2"/>
+  <text x="700" y="197" class="heading">2 · Held-out live study</text>
+  <text x="700" y="235" class="copy">Representative reserved tasks</text>
+  <text x="700" y="262" class="copy">Paired repeated trials</text>
+  <text x="700" y="289" class="copy">Independent human-calibrated graders</text>
+  <text x="700" y="316" class="copy">Uncertainty + real usage</text>
+  <rect x="540" y="355" width="320" height="82" rx="14" fill="#252044"/>
+  <text x="700" y="385" class="claim">Can support:</text>
+  <text x="700" y="411" class="copy">“This candidate performed better in this study.”</text>
+
+  <rect x="940" y="155" width="390" height="330" rx="22" class="layer3"/>
+  <text x="1135" y="197" class="heading">3 · Production evidence</text>
+  <text x="1135" y="235" class="copy">Real IAM, sandbox, and approval</text>
+  <text x="1135" y="262" class="copy">Independent operation and monitoring</text>
+  <text x="1135" y="289" class="copy">Incidents, cost, adoption, outcomes</text>
+  <text x="1135" y="316" class="copy">External review over time</text>
+  <rect x="975" y="355" width="320" height="82" rx="14" fill="#0f3028"/>
+  <text x="1135" y="385" class="claim">Required before:</text>
+  <text x="1135" y="411" class="copy">Safety, savings, scale, or ROI claims</text>
+
+  <text x="70" y="540" class="axis">External validity and business confidence</text>
+  <path d="M360 535 H1320" stroke="#9ee7bd" stroke-width="3"/>
+  <path d="M1320 535 l-14 -8 v16 z" fill="#9ee7bd"/>
+</svg>

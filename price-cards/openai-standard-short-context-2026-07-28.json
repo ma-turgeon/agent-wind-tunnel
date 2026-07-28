@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "agent-wind-tunnel.price-card/v1",
+  "currency": "USD",
+  "effectiveDate": "2026-07-28",
+  "provenance": {
+    "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+    "retrievedAt": "2026-07-28",
+    "serviceTier": "standard",
+    "contextTier": "short-context",
+    "regionalUpliftAssumption": "none; direct OpenAI standard processing without a regional data-residency uplift",
+    "notes": "Prices are USD per one million tokens. Tool charges, long-context tiers, regional processing, priority processing, Batch, Flex, and third-party hosting are excluded.",
+    "claimBoundary": "This versioned card supports a bounded cost estimate for the named service and context tier. Raw provider token counts remain the measurement of record; derived USD must be recomputed when provider pricing or routing changes."
+  },
+  "models": [
+    {
+      "id": "gpt-5.6-sol",
+      "inputUsdPerMillionTokens": 5,
+      "cachedInputUsdPerMillionTokens": 0.5,
+      "cacheWriteInputUsdPerMillionTokens": 6.25,
+      "outputUsdPerMillionTokens": 30
+    },
+    {
+      "id": "gpt-5.6-terra",
+      "inputUsdPerMillionTokens": 2.5,
+      "cachedInputUsdPerMillionTokens": 0.25,
+      "cacheWriteInputUsdPerMillionTokens": 3.125,
+      "outputUsdPerMillionTokens": 15
+    },
+    {
+      "id": "gpt-5.6-luna",
+      "inputUsdPerMillionTokens": 1,
+      "cachedInputUsdPerMillionTokens": 0.1,
+      "cacheWriteInputUsdPerMillionTokens": 1.25,
+      "outputUsdPerMillionTokens": 6
+    }
+  ]
+}

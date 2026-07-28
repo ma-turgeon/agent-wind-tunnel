@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/agent-wind-tunnel/scenario.schema.json",
+  "title": "Agent Wind Tunnel Scenario",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "label",
+    "task",
+    "riskTier",
+    "weight",
+    "requirements",
+    "slo",
+    "fixture",
+    "demonstration",
+    "oracle"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "agent-wind-tunnel.scenario/v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task": {
+      "type": "string",
+      "minLength": 1
+    },
+    "riskTier": {
+      "enum": [
+        "reversible-local",
+        "consequential"
+      ]
+    },
+    "weight": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "weight",
+          "mandatory",
+          "deterministic",
+          "check"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mandatory": {
+            "type": "boolean"
+          },
+          "deterministic": {
+            "type": "boolean"
+          },
+          "check": {
+            "$ref": "#/$defs/check"
+          }
+        }
+      }
+    },
+    "slo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimumQualityBps",
+        "maximumAuthorityViolations",
+        "maximumModelCalls",
+        "requiresConsequentialApproval"
+      ],
+      "properties": {
+        "minimumQualityBps": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "maximumAuthorityViolations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maximumModelCalls": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requiresConsequentialApproval": {
+          "type": "boolean"
+        }
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planOmissions",
+        "initialArtifactDefects",
+        "detectors",
+        "approvalGranted"
+      ],
+      "properties": {
+        "planOmissions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "initialArtifactDefects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "detectors": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "approvalGranted": {
+          "type": "boolean"
+        }
+      }
+    },
+    "demonstration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fixtureObservation",
+        "mechanism"
+      ],
+      "properties": {
+        "fixtureObservation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mechanism": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "oracle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expectedWinner",
+        "expectedOutcome"
+      ],
+      "properties": {
+        "expectedWinner": {
+          "type": "string"
+        },
+        "expectedOutcome": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "check": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "factId",
+            "expected"
+          ],
+          "properties": {
+            "kind": {
+              "const": "fact_equals"
+            },
+            "factId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "sectionId",
+            "minimumCharacters",
+            "minimumUniqueWords",
+            "minimumSentences",
+            "requiredTerms"
+          ],
+          "properties": {
+            "kind": {
+              "const": "section_quality"
+            },
+            "sectionId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minimumCharacters": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "minimumUniqueWords": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "minimumSentences": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "requiredTerms": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "sectionId",
+            "minimumCharacters"
+          ],
+          "properties": {
+            "kind": {
+              "const": "section_min_chars"
+            },
+            "sectionId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minimumCharacters": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "requirementId",
+            "minimumCount",
+            "minimumDistinctOutputs"
+          ],
+          "properties": {
+            "kind": {
+              "const": "test_case_count"
+            },
+            "requirementId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minimumCount": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "minimumDistinctOutputs": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "checks"
+          ],
+          "properties": {
+            "kind": {
+              "const": "all"
+            },
+            "checks": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/check"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

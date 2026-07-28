@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A bounded Agent Wind Tunnel live-model pilot comparing direct and loop architectures on one synthetic scenario, with exact usage, cost estimate, decision, and claim boundary.">
+  <meta name="theme-color" content="#07111f">
+  <title>Bounded live pilot · Agent Wind Tunnel</title>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <nav class="site-nav" aria-label="Primary">
+    <div class="shell">
+      <a class="brand" href="index.html">Agent Wind Tunnel</a>
+      <div class="nav-links">
+        <a href="demo.html">90-second demo</a>
+        <a href="report/">Calibration report</a>
+        <a href="case-study.html">Case study</a>
+        <a href="guide.html">Technical guide</a>
+        <a href="limitations.html">Limitations</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="page-head shell">
+      <p class="eyebrow">Bounded live evidence · 2026-07-28</p>
+      <h1>Both designs passed. The simpler one was recommended.</h1>
+      <p class="lede">On one synthetic <code>operator-doc-gap</code> scenario, <code>direct</code> and <code>loop</code> each completed three accepted runs using <code>gpt-5.6-terra</code> at medium reasoning effort. Because both cleared the declared gates, lower complexity decided the result.</p>
+      <p class="boundary"><strong>Hard evidence boundary:</strong> one synthetic scenario, one model/configuration, and three repetitions per candidate. Deterministic checks are not independent semantic grading. This is not a benchmark, generalization, production outcome, or ROI claim. The price-card value is an estimate—not a provider invoice.</p>
+      <div class="actions">
+        <a class="button" href="https://github.com/ma-turgeon/agent-wind-tunnel/blob/main/evidence/live-pilot-2026-07-28.json">Inspect the machine-readable evidence</a>
+        <a class="button secondary" href="index.html">Return to the overview</a>
+      </div>
+    </header>
+
+    <article class="prose">
+      <h2>The decision in one sentence</h2>
+      <blockquote>Both candidates passed all declared checks; <code>direct</code> was recommended because the loop added calls, tokens, estimated cost, latency, and structural complexity without improving the observed quality score in this narrow pilot.</blockquote>
+
+      <div class="stats" aria-label="Live pilot totals">
+        <div class="stat"><strong>6/6</strong><span>accepted live runs</span></div>
+        <div class="stat"><strong>9</strong><span>model calls in total</span></div>
+        <div class="stat"><strong>12,019</strong><span>reported tokens in total</span></div>
+        <div class="stat"><strong>US$0.08756</strong><span>total price-card estimate</span></div>
+      </div>
+
+      <h2>Controlled comparison</h2>
+      <div class="two-col">
+        <div class="card">
+          <p class="tag">Fixed inputs</p>
+          <h3>Same task and model</h3>
+          <p><strong>Date:</strong> 2026-07-28<br>
+          <strong>Model:</strong> <code>gpt-5.6-terra</code><br>
+          <strong>Reasoning effort:</strong> medium<br>
+          <strong>Scenario:</strong> <code>operator-doc-gap</code></p>
+        </div>
+        <div class="card">
+          <p class="tag">Experiment shape</p>
+          <h3>Small by design</h3>
+          <p><strong>Candidates:</strong> <code>direct</code> and <code>loop</code><br>
+          <strong>Repetitions:</strong> 3 per candidate<br>
+          <strong>Accepted:</strong> 3/3 each<br>
+          <strong>Retries:</strong> 0</p>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top: 1.25rem">
+        <table>
+          <thead>
+            <tr>
+              <th>Candidate</th>
+              <th>Accepted</th>
+              <th>Quality</th>
+              <th>Mean calls</th>
+              <th>Mean token units</th>
+              <th>P95 elapsed</th>
+              <th>Mean price-card estimate</th>
+              <th>Decision</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>direct</code></td>
+              <td>3/3</td>
+              <td>10,000</td>
+              <td>1</td>
+              <td>1,393</td>
+              <td>11,391 ms</td>
+              <td>US$0.0125575</td>
+              <td>Recommended</td>
+            </tr>
+            <tr>
+              <td><code>loop</code></td>
+              <td>3/3</td>
+              <td>10,000</td>
+              <td>2</td>
+              <td>2,613.333</td>
+              <td>17,872 ms</td>
+              <td>US$0.01662917</td>
+              <td>Passed; added complexity not earned</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">Quality is the harness’s deterministic 10,000-point check result. P95 values summarize only three observed runs per candidate and must not be read as stable performance estimates.</p>
+
+      <h2>Why this is useful</h2>
+      <div class="two-col">
+        <div class="card">
+          <p class="tag">Technical signal</p>
+          <h3>The live path is measurable</h3>
+          <p>The run retained acceptance, calls, token usage, retries, elapsed time, configuration, and price-card estimates for each candidate. The selection rule stayed the same: hard gates first, then least complexity.</p>
+        </div>
+        <div class="card">
+          <p class="tag">Business signal</p>
+          <h3>Complexity needs evidence</h3>
+          <p>A more elaborate workflow was not rewarded merely for being elaborate. When observed quality tied, the system recommended the option with the smaller operational burden.</p>
+        </div>
+      </div>
+
+      <h2>What the result supports—and what it does not</h2>
+      <div class="table-wrap">
+        <table class="claim-table">
+          <thead><tr><th>Supported by this record</th><th>Not supported by this record</th></tr></thead>
+          <tbody>
+            <tr><td>Six live-model runs completed and all were accepted by the declared checks.</td><td>Independent semantic correctness or human-rated quality.</td></tr>
+            <tr><td>The harness captured exact aggregate calls, tokens, retries, configuration, timing, and price-card estimates.</td><td>A statistically representative latency, reliability, or cost benchmark.</td></tr>
+            <tr><td>For this fixed scenario/model/configuration, both candidates tied on deterministic quality and <code>direct</code> was selected.</td><td>General superiority across tasks, models, prompts, organizations, or production workloads.</td></tr>
+            <tr><td>The added loop did not earn its extra complexity in this six-run sample.</td><td>Production safety, savings, adoption, customer value, or ROI.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Evidence record</h2>
+      <p>The dated machine-readable record is published at <a href="https://github.com/ma-turgeon/agent-wind-tunnel/blob/main/evidence/live-pilot-2026-07-28.json"><code>evidence/live-pilot-2026-07-28.json</code></a>. It should remain attached whenever these figures are quoted.</p>
+
+      <div class="actions">
+        <a class="button" href="case-study.html">Read the business and technical case</a>
+        <a class="button secondary" href="limitations.html">Review all limitations</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <span>Agent Wind Tunnel · bounded live pilot · 2026-07-28</span>
+      <span><a href="index.html">Home</a> · <a href="guide.html">Technical guide</a> · <a href="limitations.html">Limitations</a></span>
+    </div>
+  </footer>
+</body>
+</html>

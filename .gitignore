@@ -1,0 +1,28 @@
+# Credentials and machine-local configuration
+.env
+.env.*
+!.env.example
+
+# Dependencies and package output
+node_modules/
+.npm-cache/
+*.tgz
+.pack-manifest.json
+
+# Generated evaluation output
+wind-tunnel-output/
+.live-output/
+.ci-output/
+.pages-output/
+.site-output/
+.site-output-staging-*/
+coverage/
+
+# Local-only material must never enter the public tree
+**/private/
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+*.swp
+*~

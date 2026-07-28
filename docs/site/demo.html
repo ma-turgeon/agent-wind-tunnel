@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A silent, captioned 90-second Agent Wind Tunnel product demo using verified synthetic composite results.">
+  <meta name="theme-color" content="#07111f">
+  <title>90-second demo · Agent Wind Tunnel</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07111f;
+      --surface: #0d2234;
+      --text: #f6f9fc;
+      --muted: #b8c8d8;
+      --line: #31516a;
+      --cyan: #65c6df;
+      --green: #69d6a3;
+      --violet: #b59cff;
+      --amber: #f0b56b;
+      --rose: #ee9ab6;
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 10%, rgba(72, 121, 160, .22), transparent 35rem),
+        radial-gradient(circle at 8% 90%, rgba(101, 198, 223, .1), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: #9fe5f7; }
+    button:focus-visible, a:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+    .frame {
+      display: grid;
+      min-height: 100vh;
+      grid-template-rows: auto 1fr auto;
+    }
+    header, footer {
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .8rem clamp(1rem, 3vw, 2.2rem);
+      background: rgba(7, 17, 31, .86);
+      backdrop-filter: blur(12px);
+    }
+    header { border-bottom: 1px solid rgba(70, 103, 130, .5); }
+    footer { border-top: 1px solid rgba(70, 103, 130, .5); }
+    .brand { color: var(--text); font-weight: 800; text-decoration: none; }
+    .evidence-label {
+      padding: .35rem .7rem;
+      border: 1px solid #7b5b39;
+      border-radius: 999px;
+      color: #f7d8b2;
+      font-size: .78rem;
+      font-weight: 750;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    main { position: relative; min-height: 0; }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      overflow: auto;
+      place-items: center;
+      padding: clamp(1.3rem, 5vw, 5rem);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(16px);
+      transition: opacity .45s ease, transform .45s ease;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .content { width: min(1180px, 100%); }
+    .kicker {
+      margin: 0 0 .7rem;
+      color: var(--green);
+      font-size: .83rem;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 { line-height: 1.1; letter-spacing: -.03em; }
+    h1 { max-width: 1000px; margin: 0; font-size: clamp(3.2rem, 8vw, 7rem); }
+    h2 { max-width: 1000px; margin: 0 0 1rem; font-size: clamp(2.3rem, 6vw, 5rem); }
+    h3 { margin: 0 0 .5rem; font-size: 1.3rem; }
+    .lede { max-width: 900px; color: var(--muted); font-size: clamp(1.15rem, 2.5vw, 1.65rem); }
+    .rule { color: var(--cyan); }
+    .grid-4, .grid-3, .grid-2, .results {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .results { grid-template-columns: 1fr 1fr; }
+    .card, .result, .gate, .boundary {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(145deg, rgba(16, 40, 59, .96), rgba(8, 25, 39, .96));
+    }
+    .card, .result, .gate { padding: 1.15rem; }
+    .card p, .result p, .gate p { margin: .35rem 0 0; color: var(--muted); }
+    .card strong { color: var(--cyan); }
+    .result { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .result span:first-child { color: #cfdae5; }
+    .result span:last-child { color: var(--green); font-weight: 800; }
+    .arrow-flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: .75rem;
+      margin-top: 2.2rem;
+    }
+    .gate { position: relative; min-height: 155px; }
+    .gate:not(:last-child)::after {
+      position: absolute;
+      top: 50%;
+      right: -.68rem;
+      width: .6rem;
+      height: .6rem;
+      border-top: 2px solid var(--cyan);
+      border-right: 2px solid var(--cyan);
+      content: "";
+      transform: rotate(45deg);
+    }
+    .num {
+      color: var(--green);
+      font-size: .8rem;
+      font-weight: 850;
+      letter-spacing: .1em;
+    }
+    .quote {
+      max-width: 950px;
+      margin-top: 2rem;
+      padding-left: 1.4rem;
+      border-left: 5px solid var(--green);
+      font-size: clamp(1.35rem, 3vw, 2.1rem);
+      font-weight: 680;
+    }
+    .boundary {
+      margin-top: 1.5rem;
+      padding: 1rem 1.2rem;
+      border-color: #765735;
+      background: rgba(73, 50, 28, .5);
+      color: #f7d9b5;
+    }
+    .proof {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-top: 1rem;
+      color: var(--muted);
+    }
+    .proof::before {
+      display: grid;
+      flex: 0 0 28px;
+      height: 28px;
+      place-items: center;
+      border: 1px solid var(--green);
+      border-radius: 50%;
+      color: var(--green);
+      content: "✓";
+      font-weight: 900;
+    }
+    .controls { display: flex; align-items: center; gap: .55rem; }
+    button {
+      min-width: 44px;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #10283b;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 750;
+    }
+    button:hover { border-color: var(--cyan); }
+    #play { min-width: 82px; padding-inline: .8rem; }
+    .counter { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .progress-track {
+      position: absolute;
+      z-index: 10;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 4px;
+      background: rgba(255,255,255,.08);
+    }
+    .progress {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      transition: width .1s linear;
+    }
+    .links { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+    .links a {
+      padding: .7rem 1rem;
+      border: 1px solid var(--cyan);
+      border-radius: 999px;
+      color: var(--text);
+      font-weight: 750;
+      text-decoration: none;
+    }
+    .links a:first-child { background: var(--cyan); color: #06131c; }
+    .caption { max-width: 50%; color: var(--muted); font-size: .82rem; }
+    @media (max-width: 900px) {
+      .grid-4, .grid-3, .arrow-flow { grid-template-columns: 1fr 1fr; }
+      .gate:not(:last-child)::after { display: none; }
+    }
+    @media (max-width: 620px) {
+      body { overflow: auto; }
+      .frame { min-height: 100svh; }
+      header { align-items: flex-start; flex-direction: column; }
+      .slide { padding: 1.1rem; }
+      .grid-4, .grid-3, .grid-2, .results, .arrow-flow { grid-template-columns: 1fr; }
+      footer { align-items: flex-start; flex-direction: column; }
+      .caption { max-width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .slide { transition: none; }
+      .progress { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <header>
+      <a class="brand" href="index.html">Agent Wind Tunnel</a>
+      <span class="evidence-label">Silent · captioned · synthetic composite evidence</span>
+    </header>
+
+    <main id="slides" aria-live="polite">
+      <section class="slide active" aria-label="Slide 1 of 9">
+        <div class="content">
+          <p class="kicker">90-second product demonstration</p>
+          <h1>Every agent node must <span class="rule">earn</span> its cost and authority.</h1>
+          <p class="lede">A reproducible laboratory for choosing the smallest evaluated agent architecture that meets explicit requirements.</p>
+          <p class="boundary"><strong>Before the results:</strong> this demo uses fictional synthetic/composite calibration. It does not claim production safety, live-model superiority, savings, or ROI.</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 2 of 9">
+        <div class="content">
+          <p class="kicker">The problem</p>
+          <h2>Orchestration is easy to add. Evidence is harder.</h2>
+          <div class="grid-4">
+            <article class="card"><h3>More calls</h3><p>Planning, review, repair, and synthesis consume model budget.</p></article>
+            <article class="card"><h3>More latency</h3><p>Sequential gates and retries extend the critical path.</p></article>
+            <article class="card"><h3>More failure modes</h3><p>Every edge, join, contract, and state transition can break.</p></article>
+            <article class="card"><h3>More authority</h3><p>Tools and effects widen the permission and approval surface.</p></article>
+          </div>
+          <p class="quote">The question is not “How many agents can we add?” It is “Which complexity is justified by a measured failure?”</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 3 of 9">
+        <div class="content">
+          <p class="kicker">Four declared alternatives</p>
+          <h2>Direct remains the baseline.</h2>
+          <div class="grid-4">
+            <article class="card"><strong>01</strong><h3>Direct</h3><p>Worker + deterministic verification.</p></article>
+            <article class="card"><strong>02</strong><h3>Bounded loop</h3><p>Evaluate, repair once, re-check.</p></article>
+            <article class="card"><strong>03</strong><h3>Parallel review</h3><p>Independent specialist branches + join.</p></article>
+            <article class="card"><strong>04</strong><h3>Governed graph</h3><p>Plan, review, repair, approve, simulate.</p></article>
+          </div>
+          <p class="boundary">These are explicit candidates—not four maturity levels every workflow should climb.</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 4 of 9">
+        <div class="content">
+          <p class="kicker">Constraint-first method</p>
+          <h2>Invalid or unsafe candidates never reach the tie-breaker.</h2>
+          <div class="arrow-flow">
+            <article class="gate"><span class="num">01</span><h3>Declare</h3><p>Scenario, SLO, Policy, Blueprint.</p></article>
+            <article class="gate"><span class="num">02</span><h3>Validate</h3><p>Contracts, bounds, scope, dominance.</p></article>
+            <article class="gate"><span class="num">03</span><h3>Execute</h3><p>Exact node and edge ledger.</p></article>
+            <article class="gate"><span class="num">04</span><h3>Gate</h3><p>Quality, reliability, authority, budget.</p></article>
+            <article class="gate"><span class="num">05</span><h3>Select</h3><p>Pareto, then least complexity.</p></article>
+          </div>
+          <p class="proof">A cheap candidate cannot compensate for a mandatory or authority failure.</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 5 of 9">
+        <div class="content">
+          <p class="kicker">Verified built-in calibration</p>
+          <h2>Each level earns one constructed case.</h2>
+          <div class="results">
+            <div class="result"><span>Simple deterministic transform</span><span>direct</span></div>
+            <div class="result"><span>Operator runbook gap</span><span>loop</span></div>
+            <div class="result"><span>Cross-domain release review</span><span>parallel-review</span></div>
+            <div class="result"><span>Consequential deployment simulation</span><span>graph-max-governed</span></div>
+          </div>
+          <p class="boundary">The ladder is intentional calibration. It proves the harness can distinguish designed mechanisms—not that real models fail in this order.</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 6 of 9">
+        <div class="content">
+          <p class="kicker">Enterprise portfolio evaluation pack</p>
+          <h2>Six fictional composite cases connect architecture to business constraints.</h2>
+          <div class="grid-3">
+            <article class="card"><h3>direct</h3><p>Portfolio intake completeness.</p></article>
+            <article class="card"><h3>loop</h3><p>Capacity-feasible ranking and evidence-gap resolution.</p></article>
+            <article class="card"><h3>parallel-review</h3><p>Data-sharing risk and cross-functional dependencies.</p></article>
+            <article class="card"><h3>graph-max-governed</h3><p>High-impact citizen-service approval routing.</p></article>
+            <article class="card"><h3>9 dossiers</h3><p>Normalized capacity points, no organizational/client production data.</p></article>
+            <article class="card"><h3>Public frameworks</h3><p>NIST AI RMF and Government of Canada governance references.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 7 of 9">
+        <div class="content">
+          <p class="kicker">Separated evidence</p>
+          <h2>Three held-apart cases—still fictional composites.</h2>
+          <div class="grid-3">
+            <article class="card"><h3>Procurement copilot</h3><p><strong>parallel-review</strong></p></article>
+            <article class="card"><h3>Service-desk pilot</h3><p><strong>loop</strong></p></article>
+            <article class="card"><h3>Eligibility decision support</h3><p><strong>graph-max-governed</strong></p></article>
+          </div>
+          <p class="boundary">The file is separated from calibration, but it is not production data, external validation, a completed blinded human study, or a statistically representative benchmark.</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 8 of 9">
+        <div class="content">
+          <p class="kicker">Negative evidence</p>
+          <h2>The interesting result is what breaks.</h2>
+          <div class="grid-2">
+            <article class="card">
+              <h3>Ablation</h3>
+              <p>Presentation, model synthesis, and speculative execution are removable in the built-in corpus. Remove plan review or security review, and named cases fail.</p>
+            </article>
+            <article class="card">
+              <h3>Authority</h3>
+              <p>Unknown capabilities, approval bypass routes, and mutated grants fail closed. The only consequential executor is a one-time data simulator.</p>
+            </article>
+          </div>
+          <div class="proof">Every logical node visit and selected edge is recorded separately from the model-call trace.</div>
+          <div class="proof">Live plans require explicit confirmation plus call and spend ceilings before a credential is read.</div>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 9 of 9">
+        <div class="content">
+          <p class="kicker">What the evidence supports</p>
+          <h2>Strong harness evidence. Decision-grade architecture evidence remains the next study.</h2>
+          <p class="lede">A separate six-run live pilot exercised the bounded empirical path on one synthetic scenario. A credible next study reserves representative tasks, runs paired repetitions under fixed controls, calibrates graders to blinded human labels, and reports uncertainty, failures, real usage, and sensitivity.</p>
+          <p class="quote">Technical depth is not the number of agents. It is the quality of the decision, controls, and evidence.</p>
+          <div class="links">
+            <a href="report/">Inspect the verified report</a>
+            <a href="live-pilot.html">Inspect the bounded live pilot</a>
+            <a href="case-study.html">Read the case study</a>
+            <a href="https://github.com/ma-turgeon/agent-wind-tunnel">Review the code</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="progress-track" aria-hidden="true"><div class="progress" id="progress"></div></div>
+    </main>
+
+    <footer>
+      <div class="caption" id="caption">Slide 1: project thesis and evidence boundary. All information is presented visually; there is no audio.</div>
+      <div class="controls" aria-label="Demo controls">
+        <button type="button" id="prev" aria-label="Previous slide">←</button>
+        <button type="button" id="play" aria-label="Pause auto-advance">Pause</button>
+        <button type="button" id="next" aria-label="Next slide">→</button>
+        <span class="counter" id="counter">1 / 9</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+      const slides = [...document.querySelectorAll(".slide")];
+      const captions = [
+        "Slide 1: project thesis and evidence boundary. All information is presented visually; there is no audio.",
+        "Slide 2: extra orchestration adds calls, latency, failure modes, and authority surface.",
+        "Slide 3: four explicit alternatives, with direct as the baseline.",
+        "Slide 4: declare, validate, execute, gate, then select the least complex feasible candidate.",
+        "Slide 5: verified built-in synthetic composite calibration results.",
+        "Slide 6: verified six-case fictional enterprise portfolio calibration.",
+        "Slide 7: three separated but still fictional composite cases.",
+        "Slide 8: ablation, authority, route-ledger, and live-spend failure evidence.",
+        "Slide 9: warranted claim, next empirical study, and review links."
+      ];
+      const progress = document.getElementById("progress");
+      const counter = document.getElementById("counter");
+      const caption = document.getElementById("caption");
+      const play = document.getElementById("play");
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const slideMs = 10000;
+      let index = 0;
+      let playing = !prefersReduced;
+      let startedAt = performance.now();
+      let carried = 0;
+      let frameId = null;
+
+      function render() {
+        slides.forEach((slide, slideIndex) => {
+          slide.classList.toggle("active", slideIndex === index);
+          slide.setAttribute("aria-hidden", slideIndex === index ? "false" : "true");
+        });
+        counter.textContent = `${index + 1} / ${slides.length}`;
+        caption.textContent = captions[index];
+        play.textContent = playing ? "Pause" : (index === slides.length - 1 ? "Replay" : "Play");
+        play.setAttribute("aria-label", playing ? "Pause auto-advance" : "Start auto-advance");
+      }
+
+      function select(nextIndex, autoplay = playing) {
+        index = (nextIndex + slides.length) % slides.length;
+        playing = autoplay;
+        carried = 0;
+        startedAt = performance.now();
+        progress.style.width = "0%";
+        render();
+      }
+
+      function tick(now) {
+        if (playing) {
+          const elapsed = carried + now - startedAt;
+          progress.style.width = `${Math.min(100, (elapsed / slideMs) * 100)}%`;
+          if (elapsed >= slideMs) {
+            if (index === slides.length - 1) {
+              playing = false;
+              carried = slideMs;
+              progress.style.width = "100%";
+              render();
+            } else {
+              select(index + 1, true);
+            }
+          }
+        }
+        frameId = requestAnimationFrame(tick);
+      }
+
+      document.getElementById("prev").addEventListener("click", () => select(index - 1, false));
+      document.getElementById("next").addEventListener("click", () => {
+        if (index === slides.length - 1) select(0, false);
+        else select(index + 1, false);
+      });
+      play.addEventListener("click", () => {
+        if (!playing && index === slides.length - 1 && carried >= slideMs) {
+          select(0, true);
+          return;
+        }
+        if (playing) {
+          carried += performance.now() - startedAt;
+          playing = false;
+        } else {
+          startedAt = performance.now();
+          playing = true;
+        }
+        render();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") select(index - 1, false);
+        if (event.key === "ArrowRight") {
+          if (index === slides.length - 1) select(0, false);
+          else select(index + 1, false);
+        }
+        if (event.key === " ") {
+          event.preventDefault();
+          play.click();
+        }
+      });
+
+      render();
+      frameId = requestAnimationFrame(tick);
+      window.addEventListener("pagehide", () => cancelAnimationFrame(frameId), { once: true });
+    })();
+  </script>
+</body>
+</html>
