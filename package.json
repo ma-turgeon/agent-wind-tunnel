@@ -75,7 +75,7 @@
     "live": "node agent-wind-tunnel.mjs run --adapter openai"
   },
   "dependencies": {
-    "openai": "7.0.0",
-    "zod": "4.4.3"
+    "openai": "7.10.0",
+    "zod": "4.5.4"
   }
 }
