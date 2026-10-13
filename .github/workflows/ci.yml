@@ -45,7 +45,7 @@ jobs:
 
       - name: Upload reviewable fixture
         if: matrix.node-version == '22.x'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: deterministic-wind-tunnel-report
           path: .ci-output/fixture/
@@ -75,7 +75,7 @@ jobs:
           baseline: baselines/enterprise-portfolio-calibration.json
 
       - name: Upload enterprise calibration report
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: enterprise-calibration-wind-tunnel-report
           path: .ci-output/enterprise-calibration/
@@ -105,7 +105,7 @@ jobs:
           baseline: baselines/enterprise-portfolio-held-out.json
 
       - name: Upload held-out study report
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: enterprise-held-out-wind-tunnel-report
           path: .ci-output/enterprise-held-out/
